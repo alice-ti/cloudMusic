@@ -1,3 +1,10 @@
+import request from "@/utils/request"
 
 
-export default {}
+
+/**
+ * @description 获取轮播图
+ */
+export const getBanner = () =>{
+    // return request()
+}
