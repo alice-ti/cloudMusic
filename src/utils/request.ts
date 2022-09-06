@@ -1,9 +1,9 @@
+import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-import type { AxiosResponse, AxiosRequestConfig } from 'axios'
 
-const BASE_URL = 'api/'
+const BASE_URL = ' http://127.0.0.1:4000/'
 
-type OptionType = {
+interface OptionType {
   data?: unknown
   headers?: {
     [name: string]: string | number | boolean
@@ -15,9 +15,9 @@ axios.interceptors.request.use(
   (config) => {
     return config
   },
-  (error) => {
+  async (error) => {
     // 当请求异常时做一些处理
-    return Promise.reject(error)
+    return await Promise.reject(error)
   }
 )
 
@@ -26,8 +26,8 @@ axios.interceptors.response.use(
   (response) => {
     return response
   },
-  (error) => {
-    return Promise.reject(error)
+  async (error) => {
+    return await Promise.reject(error)
   }
 )
 
@@ -36,24 +36,28 @@ axios.interceptors.response.use(
  * @param url   请求url
  * @param method   请求类型
  * @param options   请求参数
- * @returns {Promise<AxiosResponse>}
  */
-const request = (url: string, method: string, options: OptionType = {}): Promise<AxiosResponse> => {
+const request = async <T>(
+  url: string,
+  method: string,
+  options: OptionType = {}
+): Promise<AxiosResponse<T>> => {
   const params = method === 'GET' ? { params: options?.data ?? {} } : { data: options?.data ?? {} }
 
   const config: AxiosRequestConfig<OptionType> = {
     url,
     method,
+    baseURL: BASE_URL,
     ...params,
   }
 
-  if (options?.headers) config.headers = options?.headers
+  if (options?.headers != null) config.headers = options?.headers
 
-  return new Promise((resolve) => {
+  return await new Promise((resolve) => {
     axios(config)
-      .then((response) => {
+      .then((response: AxiosResponse<T>) => {
         console.log(response)
-        resolve(response.data)
+        resolve(response)
       })
       .catch((error) => {
         console.log('_Axios_EOR_', error)

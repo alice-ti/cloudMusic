@@ -1,13 +1,18 @@
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCards, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/effect-cards'
-
 import './index.css'
 
-const SwiperCard: React.FC = () => {
+import React from 'react'
+import { Autoplay, EffectCards } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+interface SwiperPropsType {
+  swiperList: any[]
+}
+
+const SwiperCard: React.FC<SwiperPropsType> = (props) => {
+  const { swiperList } = props
   return (
     <>
       <Swiper
@@ -21,15 +26,11 @@ const SwiperCard: React.FC = () => {
         modules={[EffectCards, Autoplay]}
         className="flex justify-center items-center rounded-md"
       >
-        <SwiperSlide className="rounded-xl bg-slate-300">Slide 1</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-slate-500">Slide 2</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-slate-700">Slide 3</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-slate-900">Slide 4</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-violet-100">Slide 5</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-violet-300">Slide 6</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-violet-500">Slide 7</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-violet-700">Slide 8</SwiperSlide>
-        <SwiperSlide className="rounded-xl bg-violet-900">Slide 9</SwiperSlide>
+        {swiperList.map((ele) => (
+          <SwiperSlide className="rounded-xl" key={ele?.encodeId}>
+            <img src={ele?.imageUrl} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   )
