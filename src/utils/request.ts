@@ -56,7 +56,7 @@ const request = async <T>(
   return await new Promise((resolve) => {
     axios(config)
       .then((response: AxiosResponse<T>) => {
-        console.log(response)
+        // console.log(response)
         resolve(response)
       })
       .catch((error) => {

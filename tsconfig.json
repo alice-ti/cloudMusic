@@ -19,6 +19,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/service/*"],
+      "@assets/*": ["src/assets/*"],
       "@type/*": ["src/type/*"],
       "@store/*": ["src/store/*"],
       "@features/*": ["src/features/*"],

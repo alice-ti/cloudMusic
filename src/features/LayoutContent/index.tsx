@@ -1,3 +1,4 @@
+import RecomSongSheet from '@features/RecomSongSheet'
 import React, { useEffect, useState } from 'react'
 
 import SwiperCard from '@/components/Swiper'
@@ -17,12 +18,13 @@ const LayouContent: React.FC = () => {
       } = await getBanner()
       setSwiperList(banners)
     }
-    bannerList()
+    void bannerList()
   }, [])
   return (
     <>
       <main className="flex-1 overflow-y-auto">
         <SwiperCard swiperList={swiperList} />
+        <RecomSongSheet />
       </main>
     </>
   )
