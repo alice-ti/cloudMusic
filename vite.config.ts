@@ -11,6 +11,7 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
       '@api': resolve(__dirname, './src/service'),
       '@type': resolve(__dirname, './src/type'),
+      '@pages': resolve(__dirname, './src/pages'),
       '@store': resolve(__dirname, './src/store'),
       '@assets': resolve(__dirname, './src/assets'),
       '@router': resolve(__dirname, './src/router'),

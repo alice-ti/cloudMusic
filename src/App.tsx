@@ -1,18 +1,14 @@
 import './App.css'
 
-import LayouContent from '@features/LayoutContent'
-import LayouFooter from '@features/LayoutFooter'
-import LayouHeader from '@features/LayoutHeader'
+import Layout from '@router/index'
+import React from 'react'
+import { HashRouter } from 'react-router-dom'
 
-function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <div className="h-screen flex flex-col">
-        <LayouHeader />
-        <LayouContent />
-        <LayouFooter />
-      </div>
-    </>
+    <HashRouter>
+      <Layout />
+    </HashRouter>
   )
 }
 

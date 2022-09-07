@@ -21,6 +21,7 @@
       "@api/*": ["src/service/*"],
       "@assets/*": ["src/assets/*"],
       "@type/*": ["src/type/*"],
+      "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
       "@features/*": ["src/features/*"],
       "@components/*": ["src/components/*"],
