@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import Album from '@/components/Album'
-import { getRecSongSheet } from '@/service'
+import { getRecSongSheet } from '@/service/songSheet'
 
 const RecomSongSheet: React.FC = () => {
   const [songList, setSongList] = useState<any[]>()

@@ -6,7 +6,6 @@ import './index.css'
 import React from 'react'
 import { Autoplay, EffectCards } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
-
 interface SwiperPropsType {
   swiperList: any[]
 }
