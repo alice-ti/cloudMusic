@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Songsheet: React.FC = () => {
+  const [text, setText] = useState(0)
+  const handleClick = (): void => {
+    setText(text + 1)
+  }
   return (
     <>
       <header>
-        <div></div>
+        <div>{text}</div>
       </header>
-      <main></main>
+      <main>{console.log('re-render')}</main>
+      <button onClick={handleClick}>TTTTTTT</button>
     </>
   )
 }

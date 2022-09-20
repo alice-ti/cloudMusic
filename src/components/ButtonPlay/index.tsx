@@ -26,7 +26,8 @@ const ButtonPlay: React.FC<ButtonPlayType> = (props) => {
   return (
     <button
       className={
-        `rounded-full bg-gray-200 flex justify-center items-center button ` + getSize(size)?.box
+        `rounded-full bg-gray-200 flex justify-center items-center button select-none ` +
+        getSize(size)?.box
       }
     >
       <img src={play} className={getSize(size)?.play} />

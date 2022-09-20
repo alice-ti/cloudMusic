@@ -20,3 +20,8 @@ export interface PlaylistCateType {
     [name: string]: any
   }>
 }
+
+export interface ToplistType {
+  playlists: any[]
+  [name: string]: any
+}

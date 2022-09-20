@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react'
 
-import { playlistCatlist } from '@/service/songSheet'
+import SheetList from '@/features/SheetList'
+import { playlistCatlist, topPlaylist } from '@/service/songSheet'
 
 let isInit = false
 
 interface CateBtnType {
   text: string
+  active: boolean
+  subToggle: React.MouseEventHandler
 }
 // 分类按钮
-const CateBtn: React.FC<CateBtnType> = ({ text }) => (
-  <button className="mr-3 px-3.5 py-1 rounded-md bg-[#f5f5f5] text-[#7a7a7b] font-bold text-xl hover:bg-fuchsia-100 hover:text-fuchsia-900">
+const CateBtn: React.FC<CateBtnType> = ({ text, active, subToggle }) => (
+  <button
+    className={
+      'mr-3 px-3.5 py-1 rounded-md bg-[#f5f5f5] text-[#7a7a7b] font-bold text-xl hover:bg-fuchsia-100 hover:text-fuchsia-900' +
+      (active ? ' bg-fuchsia-100 text-fuchsia-900' : '')
+    }
+    onClick={subToggle}
+  >
     {text}
   </button>
 )
 
 interface CateCascadeType {
+  updateSheet: Function
   cateList: any[]
   subCateList: {
     [name: number]: any[]
@@ -22,8 +32,15 @@ interface CateCascadeType {
 }
 
 // 分类选择
-const CateCascade: React.FC<CateCascadeType> = (props: any) => {
-  const { cateList, subCateList } = props
+const CateCascade: React.FC<CateCascadeType> = (props) => {
+  const { cateList, subCateList, updateSheet } = props
+  const [curr, setCurr] = useState<string>('')
+
+  // 点击事件
+  const handleClick = (item: any, index: string): void => {
+    updateSheet({ cat: item.name })
+    setCurr(index)
+  }
   return (
     <main className="py-4 bg-gray-300 select-none">
       {Object.values(subCateList).map((ele: any, idx) => (
@@ -35,7 +52,13 @@ const CateCascade: React.FC<CateCascadeType> = (props: any) => {
             <ul className="flex-1 flex flex-wrap">
               {ele.map((item: any, index: number) => (
                 <li
-                  className="my-1 mr-3 px-3.5 py-1 font-bold text-xl rounded-md cursor-pointer text-[#7a7a7b] hover:bg-fuchsia-100 hover:text-fuchsia-900"
+                  className={
+                    'my-1 mr-3 px-3.5 py-1 font-bold text-xl rounded-md cursor-pointer text-[#7a7a7b] hover:bg-fuchsia-100 hover:text-fuchsia-900 ' +
+                    (curr === idx.toString() + index.toString()
+                      ? 'bg-fuchsia-100 text-fuchsia-900'
+                      : '')
+                  }
+                  onClick={() => handleClick(item, idx.toString() + index.toString())}
                   key={index}
                 >
                   {item?.name}
@@ -51,8 +74,10 @@ const CateCascade: React.FC<CateCascadeType> = (props: any) => {
 
 // 发现-歌单
 const Find: React.FC = () => {
-  const [cate, setCate] = useState<string[]>([])
-  const [subCate, setSubCate] = useState<any[]>([])
+  const [isShowSub, setIsShowSub] = useState<boolean>(false) // 是否展示二级分类
+  const [cate, setCate] = useState<string[]>([]) // 一级分类
+  const [subCate, setSubCate] = useState<any[]>([]) // 二级分类
+  const [sheetlist, setSheetlist] = useState<any[]>([])
 
   // 格式化二级分类
   const formatSub = (list: Array<{ category: number; [name: string]: any }>): any => {
@@ -69,6 +94,23 @@ const Find: React.FC = () => {
     return obj
   }
 
+  // 展示二级分类
+  const handleSubToggle = (): void => setIsShowSub(!isShowSub)
+
+  // 获取分类歌单
+  const getTopSheet = async (params: { cat: string }): Promise<void> => {
+    const {
+      data: { playlists },
+    } = await topPlaylist(params)
+    setSheetlist(playlists)
+  }
+
+  // 切换歌单
+  const changeSheet = (params: { cat: string }): void => {
+    console.log(params)
+    void getTopSheet(params)
+  }
+
   useEffect(() => {
     const init = async (): Promise<void> => {
       isInit = true
@@ -82,16 +124,28 @@ const Find: React.FC = () => {
 
       setSubCate(formatSub(sub))
     }
-    if (!isInit) void init()
+    if (!isInit) {
+      void init()
+      void getTopSheet({ cat: '欧美' })
+    }
   }, [])
 
   return (
     <>
       <div>A</div>
-      <header className="flex flex-row">
-        {cate.length > 0 && cate.map((ele, idx) => <CateBtn text={ele} key={idx} />)}
+      <header className="mb-6 flex flex-row">
+        {cate.length > 0 &&
+          cate.map((ele, idx, _arr) => (
+            <CateBtn
+              text={ele}
+              active={idx === _arr.length - 1 ? isShowSub : false}
+              subToggle={idx === _arr.length - 1 ? handleSubToggle : () => {}}
+              key={idx}
+            />
+          ))}
       </header>
-      <CateCascade subCateList={subCate} cateList={cate} />
+      {isShowSub && <CateCascade subCateList={subCate} cateList={cate} updateSheet={changeSheet} />}
+      <SheetList list={sheetlist} />
     </>
   )
 }

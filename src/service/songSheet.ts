@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios'
 
-import type { PlaylistCateType, RecSongSheetType } from '@/type/api'
+import type { PlaylistCateType, RecSongSheetType, ToplistType } from '@/type/api'
 import request from '@/utils/request'
 
 /**
@@ -24,8 +24,10 @@ export const getRecSongSheet = async (
  * - cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取(/playlist/catlist)
  * - limit: 取出歌单数量 , 默认为 50
  */
-export const topPlaylist = async (params = {}): Promise<AxiosResponse<any>> => {
-  return await request('/top/playlist', 'GET', params)
+export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistType>> => {
+  return await request<ToplistType>('/top/playlist', 'GET', {
+    data: params,
+  })
 }
 
 /**

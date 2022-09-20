@@ -25,8 +25,8 @@ const SwiperCard: React.FC<SwiperPropsType> = (props) => {
         modules={[EffectCards, Autoplay]}
         className="flex justify-center items-center rounded-md"
       >
-        {swiperList.map((ele) => (
-          <SwiperSlide className="rounded-xl" key={ele?.encodeId}>
+        {swiperList.map((ele, idx) => (
+          <SwiperSlide className="rounded-xl" key={idx}>
             <img src={ele?.imageUrl} />
           </SwiperSlide>
         ))}
