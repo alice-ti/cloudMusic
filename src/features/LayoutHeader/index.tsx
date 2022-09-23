@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LayouHeader: React.FC = () => {
+const LayoutHeader: React.FC = () => {
   return (
     <>
       <header className="h-16 shadow-[0_0_10px_0_rgba(0,0,0,0.3)]"></header>
@@ -8,4 +8,4 @@ const LayouHeader: React.FC = () => {
   )
 }
 
-export default LayouHeader
+export default LayoutHeader

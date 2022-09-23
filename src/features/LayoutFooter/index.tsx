@@ -1,4 +1,6 @@
-const LayouFooter = () => {
+import React from 'react'
+
+const LayoutFooter: React.FC = () => {
   return (
     <>
       <footer className="h-20 shadow-[0_0_10px_0_rgba(0,0,0,0.3)]"></footer>
@@ -6,4 +8,4 @@ const LayouFooter = () => {
   )
 }
 
-export default LayouFooter
+export default LayoutFooter

@@ -1,4 +1,6 @@
 import './index.css'
+// 注入svg脚本
+import 'virtual:svg-icons-register'
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'

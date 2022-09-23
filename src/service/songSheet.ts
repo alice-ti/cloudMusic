@@ -1,6 +1,11 @@
 import type { AxiosResponse } from 'axios'
 
-import type { PlaylistCateType, RecSongSheetType, ToplistType } from '@/type/api'
+import type {
+  PlaylistCateType,
+  PlaylistDetailsType,
+  RecSongSheetType,
+  ToplistType,
+} from '@/type/api'
 import request from '@/utils/request'
 
 /**
@@ -36,4 +41,14 @@ export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistTyp
  */
 export const playlistCatlist = async (): Promise<AxiosResponse<PlaylistCateType>> => {
   return await request<PlaylistCateType>('/playlist/catlist', 'GET')
+}
+
+export const getPlaylistDetails = async (
+  id: number
+): Promise<AxiosResponse<PlaylistDetailsType>> => {
+  return await request<PlaylistDetailsType>('/playlist/detail', 'GET', {
+    data: {
+      id,
+    },
+  })
 }
