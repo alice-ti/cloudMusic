@@ -3,9 +3,17 @@ export interface BannerType {
   banners: any[]
 }
 
+// 推荐歌曲
+export interface RecSongType {
+  id: number
+  name: string
+  picUrl: string
+  [name: string]: any
+}
+
 // 推荐歌单
 export interface RecSongSheetType {
-  result: Array<{ id: number; name: string; picUrl: string; [name: string]: any }>
+  result: RecSongType[]
 }
 
 // 歌单分类

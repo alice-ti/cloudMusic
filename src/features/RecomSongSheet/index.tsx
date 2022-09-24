@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Album from '@/components/Album'
 import { getRecSongSheet } from '@/service/songSheet'
+import { RecSongType } from '@/type/api'
 
 const RecomSongSheet: React.FC = () => {
-  const [songList, setSongList] = useState<any[]>()
+  const [songList, setSongList] = useState<RecSongType[]>()
+  const navigate = useNavigate()
+
+  // to歌单详情
+  const goPlaylist = (id: number): void => {
+    console.log(id)
+    navigate(`/playlist/${id}`)
+  }
+
   useEffect(() => {
     const getList = async (): Promise<void> => {
       const {
@@ -15,11 +25,12 @@ const RecomSongSheet: React.FC = () => {
     }
     void getList()
   }, [])
+
   return (
-    <main className="grid grid-cols-5 gap-x-4 gap-y-1.5 px-8 box-border">
+    <main className="grid grid-cols-5 gap-x-4 gap-y-1.5 px-8 box-border text-white">
       {songList?.map((ele) => (
         <div className="my-1.5" key={ele.id}>
-          <Album src={ele.picUrl} />
+          <Album src={ele.picUrl} albumClick={() => goPlaylist(ele.id)} />
         </div>
       ))}
     </main>

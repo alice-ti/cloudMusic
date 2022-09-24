@@ -1,8 +1,0 @@
-.button {
-  background: hsla(0, 0%, 10%, 0.14);
-}
-
-.button:hover {
-  background: rgba(196, 196, 196, 0.438);
-  transition: all .2s linear;
-}

@@ -1,6 +1,6 @@
 import type { RouteType } from '@type/route'
 import React, { lazy } from 'react'
-import { Outlet, useRoutes } from 'react-router-dom'
+import { Outlet, RouteObject, useRoutes } from 'react-router-dom'
 
 import LayoutFooter from '@/features/LayoutFooter'
 import LayoutHeader from '@/features/LayoutHeader'
@@ -35,6 +35,6 @@ const routes: RouteType[] = [
   { path: '/find', element: <Find />, meta: { title: 'Find' } },
 ]
 
-const Route = (): React.ReactElement | null => useRoutes(routes as any)
+const Route = (): React.ReactElement | null => useRoutes(routes as RouteObject[])
 
 export default Route
