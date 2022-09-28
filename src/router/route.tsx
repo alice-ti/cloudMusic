@@ -6,6 +6,7 @@ import LayoutFooter from '@/features/LayoutFooter'
 import LayoutHeader from '@/features/LayoutHeader'
 
 const Home = lazy(async () => await import('@pages/Home'))
+const Mine = lazy(async () => await import('@pages/Mine'))
 const Find = lazy(async () => await import('@pages/Find'))
 const PlayList = lazy(async () => await import('@/pages/PlayList'))
 
@@ -33,6 +34,7 @@ const routes: RouteType[] = [
   },
 
   { path: '/find', element: <Find />, meta: { title: 'Find' } },
+  { path: '/mine', element: <Mine />, meta: { title: 'Mine' } },
 ]
 
 const Route = (): React.ReactElement | null => useRoutes(routes as RouteObject[])

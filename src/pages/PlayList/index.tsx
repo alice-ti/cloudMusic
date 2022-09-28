@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import LoadMore from '@/components/ButtonLoadMore'
+// import useLoading from '@/components/Loading/useLoading'
 import TrackItem from '@/components/TrackItem'
-import { getPlaylistDetails } from '@/service/songSheet'
-import type { PlaylistType, SongType } from '@/type/api'
+import { getPlaylistAll, getPlaylistDetails } from '@/service/songSheet'
+import type { PlaylistAllParamsType, PlaylistType, SongType } from '@/type/api'
 
 import Introduce from './components/Introduce'
 
@@ -28,6 +29,20 @@ const Songsheet: React.FC = () => {
     if (!isInit) void init()
   }, [])
 
+  // 加载全部
+  const loadAll = (): void => {
+    const params: PlaylistAllParamsType = {
+      id: Number(id),
+    }
+
+    void (async () => {
+      const {
+        data: { songs },
+      } = await getPlaylistAll(params)
+      console.log(songs)
+    })()
+  }
+
   return (
     <>
       <main className="flex-1 overflow-y-auto px-14 box-border">
@@ -37,7 +52,7 @@ const Songsheet: React.FC = () => {
             <TrackItem songProps={ele} key={idx} />
           ))}
         </div>
-        <LoadMore text="加载全部" className="mx-auto mt-6" />
+        <LoadMore text="加载全部" className="mx-auto mt-6" onClick={loadAll} />
       </main>
     </>
   )

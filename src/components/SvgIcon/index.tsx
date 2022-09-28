@@ -11,7 +11,12 @@ const Icon: React.FC<Props> = (props: Props) => {
   const symbolId = `#icon-${name}`
 
   return (
-    <svg className={`svg-icon w-6 h-6 ${className}`} aria-hidden="true" stroke="red" fill="green">
+    <svg
+      className={`svg-icon w-6 aspect-[1/1] ${className}`}
+      aria-hidden="true"
+      stroke="red"
+      fill="green"
+    >
       <use href={symbolId} />
     </svg>
   )

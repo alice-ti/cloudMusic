@@ -1,6 +1,8 @@
 import type { AxiosResponse } from 'axios'
 
 import type {
+  PlaylistAllParamsType,
+  PlaylistAllType,
   PlaylistCateType,
   PlaylistDetailsType,
   RecSongSheetType,
@@ -43,12 +45,37 @@ export const playlistCatlist = async (): Promise<AxiosResponse<PlaylistCateType>
   return await request<PlaylistCateType>('/playlist/catlist', 'GET')
 }
 
+/**
+ * @description 歌单详情
+ * @param id 歌单id
+ */
 export const getPlaylistDetails = async (
   id: number
 ): Promise<AxiosResponse<PlaylistDetailsType>> => {
   return await request<PlaylistDetailsType>('/playlist/detail', 'GET', {
     data: {
       id,
+    },
+  })
+}
+
+/**
+ * @description 获取歌单所有歌曲
+ * @param param0
+ * - 传入对应的歌单id，即可获得对应的所有歌曲
+ * - 必选参数 : id : 歌单 id
+ * - 可选参数 : limit : 限制获取歌曲的数量，默认值为当前歌单的歌曲数量
+ * - 可选参数 : offset : 默认值为0
+ */
+export const getPlaylistAll = async (
+  params: PlaylistAllParamsType
+): Promise<AxiosResponse<PlaylistAllType>> => {
+  const { id, offset, limit } = params
+  return await request<PlaylistAllType>('/playlist/track/all', 'GET', {
+    data: {
+      id,
+      offset,
+      limit,
     },
   })
 }

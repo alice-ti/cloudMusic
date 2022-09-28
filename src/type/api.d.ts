@@ -72,6 +72,8 @@ export interface PlaylistType {
   creator: {
     nickname: string
   }
+  updateTime: number
+  trackCount: number
   coverImgUrl: string
   description: string
   [name: string]: any
@@ -81,4 +83,18 @@ export interface PlaylistType {
 export interface PlaylistDetailsType {
   playlist: PlaylistType
   privileges: any[]
+}
+
+// api 所有歌曲
+export interface PlaylistAllType {
+  privileges: SongType[]
+  songs: SongType[]
+  code: number
+}
+
+// 所有歌曲参数
+export interface PlaylistAllParamsType {
+  id: number
+  limit?: number
+  offset?: number
 }
