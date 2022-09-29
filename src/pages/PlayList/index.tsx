@@ -1,8 +1,8 @@
+import useLoading from '@components/Loading/useLoading'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import LoadMore from '@/components/ButtonLoadMore'
-// import useLoading from '@/components/Loading/useLoading'
 import TrackItem from '@/components/TrackItem'
 import { getPlaylistAll, getPlaylistDetails } from '@/service/songSheet'
 import type { PlaylistAllParamsType, PlaylistType, SongType } from '@/type/api'
@@ -15,6 +15,7 @@ const Songsheet: React.FC = () => {
   const [listDetail, setListDetail] = useState<PlaylistType>()
   const [playList, setPlayList] = useState<SongType[]>([])
   const { id } = useParams()
+  const loading = useLoading()
 
   useEffect(() => {
     const init = async (): Promise<void> => {
@@ -36,10 +37,13 @@ const Songsheet: React.FC = () => {
     }
 
     void (async () => {
+      loading.show()
       const {
         data: { songs },
       } = await getPlaylistAll(params)
       console.log(songs)
+      setPlayList(songs)
+      loading.hide()
     })()
   }
 

@@ -21,7 +21,8 @@ const Loading: React.FC<LoadingType> = (props: LoadingType) => {
       <Icon
         name="loading"
         className={
-          'absolute w-1/6 right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2  ' + className
+          'absolute w-1/6 aspect-[1/1] right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2 ' +
+          className
         }
       />
     </div>,
