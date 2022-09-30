@@ -1,3 +1,4 @@
+import Img from '@components/Img'
 import React, { useState } from 'react'
 
 import { SingerType, SongType } from '@/type/api'
@@ -32,7 +33,7 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <img src={picUrl} className="w-12 h-12 mr-4 rounded-md" />
+        <Img src={picUrl} className="w-12 h-12 mr-4 rounded-md" />
         <div className="flex-1 flex flex-col min-w-1/4">
           <div className="font-bold truncate">{name}</div>
           <div className="text-gray-600 cursor-pointer hover:underline">{formatSingerName(ar)}</div>

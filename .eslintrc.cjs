@@ -19,5 +19,6 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     '@typescript-eslint/explicit-function-return-type': 'warn',
     '@typescript-eslint/no-floating-promises': 'warn',
+    'react/display-name': 'off',
   },
 }
