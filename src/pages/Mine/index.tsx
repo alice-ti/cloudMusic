@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import type { PlaylistAllParamsType, SongType } from '@type/api'
+import React, { useEffect, useRef, useState } from 'react'
 
 import useLoading from '@/components/Loading/useLoading'
 import message from '@/components/Message'
 import TrackItem from '@/components/TrackItem'
+import VirtualList from '@/components/VirtualList'
 import LayoutFooter from '@/features/LayoutFooter'
 import LayoutHeader from '@/features/LayoutHeader'
 import { getPlaylistAll } from '@/service/songSheet'
-import { PlaylistAllParamsType, SongType } from '@/type/api'
 
 const Mine: React.FC = () => {
   const loading = useLoading()
 
+  const virRef = useRef()
   const [playList, setPlayList] = useState<SongType[]>([])
   useEffect(() => {}, [])
 
@@ -31,6 +33,7 @@ const Mine: React.FC = () => {
       } = await getPlaylistAll(params)
       console.log(songs)
       setPlayList(songs)
+
       loading.hide()
     })()
   }
@@ -40,9 +43,13 @@ const Mine: React.FC = () => {
     <div className="flex flex-col h-screen">
       <LayoutHeader />
       <button onClick={loadAll}>Load</button>
-      {playList?.map((ele, idx) => (
-        <TrackItem songProps={ele} key={idx} />
-      ))}
+      {playList.length > 0 && (
+        <VirtualList itemCount={playList.length} getItemHeight={() => 72} ref={virRef}>
+          {playList?.map((ele, idx) => (
+            <TrackItem songProps={ele} key={idx} />
+          ))}
+        </VirtualList>
+      )}
       <LayoutFooter />
     </div>
   )

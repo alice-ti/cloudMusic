@@ -1,15 +1,17 @@
 import Img from '@components/Img'
-import React, { useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 
 import { SingerType, SongType } from '@/type/api'
 import { formatTime } from '@/utils/time'
 interface TrackItemType {
   songProps: SongType
+  style?: CSSProperties
 }
 
 const TrackItem: React.FC<TrackItemType> = (props) => {
   const [showLike, setShowLike] = useState<boolean>(false)
   const {
+    style,
     songProps: {
       name,
       dt,
@@ -29,7 +31,8 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
   return (
     <>
       <div
-        className="flex items-center p-3 rounded-xl hover:bg-gray-200"
+        style={style}
+        className="flex w-full items-center p-3 rounded-xl hover:bg-gray-200"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
