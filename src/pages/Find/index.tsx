@@ -105,7 +105,12 @@ const Find: React.FC = () => {
             />
           ))}
       </header>
-      {isShowSub && <CateCascade subCateList={subCate} cateList={cate} updateSheet={changeSheet} />}
+      <CateCascade
+        subCateList={subCate}
+        cateList={cate}
+        updateSheet={changeSheet}
+        isShow={isShowSub}
+      />
       <SheetList list={sheetlist} playDetail={(e) => goPlaylist(e)} />
     </div>
   )

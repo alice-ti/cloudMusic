@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 interface CateCascadeType {
   updateSheet: Function
   cateList: any[]
+  isShow?: boolean
   subCateList: {
     [name: number]: any[]
   }
 }
 // 分类选择
 const CateCascade: React.FC<CateCascadeType> = (props) => {
-  const { cateList, subCateList, updateSheet } = props
+  const { cateList, subCateList, updateSheet, isShow = false } = props
   const [curr, setCurr] = useState<string>('')
 
   // 点击事件
@@ -18,7 +19,7 @@ const CateCascade: React.FC<CateCascadeType> = (props) => {
     setCurr(index)
   }
   return (
-    <main className="py-4 bg-gray-300 select-none">
+    <main className={'py-4 bg-gray-300 select-none ' + (isShow ? 'hidden' : '')}>
       {Object.values(subCateList).map((ele: any, idx) => (
         <ul className="mt-4" key={idx}>
           <li className="flex" key={1}>

@@ -1,13 +1,13 @@
 import React from 'react'
 
-type Props = {
+interface Props extends React.SVGAttributes<SVGElement> {
   name: string
   color?: string
   className?: string
-} & React.SVGAttributes<SVGElement>
+}
 
 const Icon: React.FC<Props> = (props: Props) => {
-  const { name, className = '' } = props
+  const { name, className = '', onClick } = props
   const symbolId = `#icon-${name}`
 
   return (
@@ -16,6 +16,7 @@ const Icon: React.FC<Props> = (props: Props) => {
       aria-hidden="true"
       stroke="red"
       fill="green"
+      onClick={onClick}
     >
       <use href={symbolId} />
     </svg>
