@@ -25,6 +25,7 @@
       "@type/*": ["src/type/*"],
       "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],
+      "@service/*": ["src/service/*"],
       "@features/*": ["src/features/*"],
       "@components/*": ["src/components/*"],
       "@router/*": ["src/router/*"]

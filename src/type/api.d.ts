@@ -98,3 +98,21 @@ export interface PlaylistAllParamsType {
   limit?: number
   offset?: number
 }
+
+// api 歌曲url params
+export interface SongUrlType {
+  id: number
+  level?: 'standard' | 'higher' | 'exhigh' | 'lossless'
+}
+
+// api url item
+interface SongUrlItem {
+  id: number // 歌曲id
+  url: string // 歌曲url
+  time: number // 歌曲时长
+  [name: string]: any
+}
+// api 歌曲url response
+export interface SongUrlResponse {
+  data: SongUrlItem[]
+}

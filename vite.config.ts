@@ -24,6 +24,7 @@ export default defineConfig({
       '@pages': resolve(__dirname, './src/pages'),
       '@store': resolve(__dirname, './src/store'),
       '@assets': resolve(__dirname, './src/assets'),
+      '@service': resolve(__dirname, './src/service'),
       '@router': resolve(__dirname, './src/router'),
       '@components': resolve(__dirname, './src/components'),
       '@features': resolve(__dirname, './src/features'),

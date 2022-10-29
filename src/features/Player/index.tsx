@@ -1,20 +1,35 @@
 import MusicPlayer from '@components/MusicPlayer'
-import Progress from '@components/Progress'
+import Slider from '@components/Slider'
 import Icon from '@components/SvgIcon'
-import React, { MouseEvent, useRef, useState } from 'react'
+import { SongUrl } from '@service/song'
+import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 
 import PlayerInfo from './PlayerInfo'
 
 const src =
-  'https://webfs.ali.kugou.com/202210271900/f2fea62ad0cf6e23ab7fa3bc3c962384/KGTX/CLTX001/cefc0bb49e2cc073c540909aa5bcb164.mp3'
+  'https://webfs.tx.kugou.com/202210291131/a72a5638260876ec4eb85d15fdca6d3d/v2/712cf71400e19386fed24331a0beb507/KGTX/CLTX001/712cf71400e19386fed24331a0beb507.mp3'
 const Player: React.FC = () => {
   const playerRef = useRef<HTMLAudioElement | null>(null)
   const [isPlay, setIsPlay] = useState<boolean>(false)
   const [rate, setRate] = useState<number>(0)
+
+  useEffect(() => {
+    const getUrl = async (): Promise<void> => {
+      const {
+        data: { data },
+      } = await SongUrl({ id: 1842865092 })
+      console.log(data[0].url)
+    }
+    void getUrl()
+  }, [])
+
   const handleEnded = (): void => {
     console.log('播放完毕')
   }
-  const handleChange = (): void => {
+  const handleSliderChange = (val: number | number[]): void => {
+    setRate(val as number)
+  }
+  const handleChange = (val: MouseEvent): void => {
     console.log('播放改变')
   }
   const handleTimeUpdate = (e: MouseEvent): void => {
@@ -35,13 +50,12 @@ const Player: React.FC = () => {
     setIsPlay(!isPlay)
     isPlay ? handlePlay() : handlePause()
   }
-  const handleProgressChange = (e: MouseEvent<HTMLElement>): void => {
-    const { pageX } = e
-    const { offsetWidth } = e.target as HTMLElement
+  const handleAfterChange = (val: number | number[]): void => {
+    setRate(val as number)
     const { duration } = playerRef.current as HTMLAudioElement
-    const percent = Number((pageX / offsetWidth).toFixed(6))
-    setRate(percent * 100)
-    if (playerRef.current !== null) playerRef.current.currentTime = percent * duration
+    if (playerRef.current !== null) {
+      playerRef.current.currentTime = ((val as number) / 100) * duration
+    }
   }
 
   return (
@@ -56,10 +70,28 @@ const Player: React.FC = () => {
         />
         <Icon name="next" className="cursor-pointer w-6 aspect-square" />
       </div>
-      <Progress
+      {/* <Progress
         rate={rate}
         className="!w-full !absolute left-0 top-0"
         onClick={handleProgressChange}
+      /> */}
+      <Slider
+        className="!w-full !p-0 !h-1 !absolute left-0 top-0"
+        rate={rate}
+        Change={handleSliderChange}
+        onAferChange={handleAfterChange}
+        trackStyle={{ background: '#862e9c' }}
+        handleStyle={{
+          background: 'transparent',
+          border: 'none',
+          boxShadow: 'none',
+          transform: 'translateX(-100%)',
+          marginTop: '0',
+          opacity: '1',
+          height: '100%',
+          width: 'auto',
+          aspectRatio: '1/1',
+        }}
       />
       <MusicPlayer
         ref={playerRef}
