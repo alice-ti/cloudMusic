@@ -6,9 +6,9 @@ const PlayerInfo: React.FC = () => {
     <>
       <Img
         src="https://p3-passport.byteimg.com/img/user-avatar/ad089cb4989f2babb031e9f0d8b1fe21~100x100.awebp"
-        className="w-14 rounded-md mr-4"
+        className="w-14 rounded-md mr-4 select-none"
       />
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between select-none">
         <div>艾姬多娜加拿大</div>
         <div className="mt-2">aksdjaldjladjadjald</div>
       </div>

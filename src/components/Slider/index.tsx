@@ -6,12 +6,14 @@ import React, { CSSProperties, HTMLAttributes } from 'react'
 interface SliderProp extends HTMLAttributes<HTMLElement> {
   onAferChange: (value: number | number[]) => void
   Change: (value: number | number[]) => void
+  onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void
+  onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void
   trackStyle?: CSSProperties
   handleStyle?: CSSProperties
   rate: number
 }
 const Slider: React.FC<SliderProp> = (props) => {
-  const { onAferChange, rate, Change, className, trackStyle, handleStyle } = props
+  const { onAferChange, onFocus, onBlur, Change, rate, className, trackStyle, handleStyle } = props
   return (
     <>
       <RcSlider
@@ -23,6 +25,8 @@ const Slider: React.FC<SliderProp> = (props) => {
         step={0.0001}
         onAfterChange={onAferChange}
         onChange={Change}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     </>
   )

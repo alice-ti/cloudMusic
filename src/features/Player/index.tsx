@@ -3,16 +3,18 @@ import Slider from '@components/Slider'
 import Icon from '@components/SvgIcon'
 import { SongUrl } from '@service/song'
 import React, { MouseEvent, useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 import PlayerInfo from './PlayerInfo'
 
 const src =
-  'https://webfs.tx.kugou.com/202210291131/a72a5638260876ec4eb85d15fdca6d3d/v2/712cf71400e19386fed24331a0beb507/KGTX/CLTX001/712cf71400e19386fed24331a0beb507.mp3'
+  'https://webfs.ali.kugou.com/202211011553/c576126f2c8a519eaa0bbfb4d0ea0e01/KGTX/CLTX001/6f64d67c0e499c0636a85807ec0f0ec5.mp3'
 const Player: React.FC = () => {
   const playerRef = useRef<HTMLAudioElement | null>(null)
   const [isPlay, setIsPlay] = useState<boolean>(false)
   const [rate, setRate] = useState<number>(0)
 
+  const isDraw = useRef<boolean>(false)
   useEffect(() => {
     const getUrl = async (): Promise<void> => {
       const {
@@ -27,15 +29,18 @@ const Player: React.FC = () => {
     console.log('播放完毕')
   }
   const handleSliderChange = (val: number | number[]): void => {
+    isDraw.current = true
     setRate(val as number)
   }
+
   const handleChange = (val: MouseEvent): void => {
     console.log('播放改变')
   }
+
   const handleTimeUpdate = (e: MouseEvent): void => {
     const { duration, currentTime } = playerRef.current as HTMLAudioElement
     const percent = Number((currentTime / duration).toFixed(6))
-    setRate(percent * 100)
+    if (!isDraw.current) setRate(percent * 100)
   }
 
   const handlePlay = (): void => {
@@ -51,7 +56,9 @@ const Player: React.FC = () => {
     isPlay ? handlePlay() : handlePause()
   }
   const handleAfterChange = (val: number | number[]): void => {
-    setRate(val as number)
+    console.log(val)
+    isDraw.current = false
+    flushSync(() => setRate(val as number))
     const { duration } = playerRef.current as HTMLAudioElement
     if (playerRef.current !== null) {
       playerRef.current.currentTime = ((val as number) / 100) * duration
