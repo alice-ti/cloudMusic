@@ -14,7 +14,7 @@ const MusicPlayer = forwardRef((props: AudioType, ref: ForwardedRef<HTMLAudioEle
   return (
     <>
       <audio
-        controls
+        // controls
         ref={ref}
         src={src}
         onChange={onChange}

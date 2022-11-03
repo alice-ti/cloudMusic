@@ -4,7 +4,7 @@ import React, { HTMLAttributes, useCallback, useEffect, useState } from 'react'
 interface ImagePropsType extends HTMLAttributes<HTMLImageElement> {
   src: string // 真实图片
   defaultImgSrc?: string // 占位图
-  [key: string]: any
+  [key: string]: unknown
 }
 
 // const cache: {

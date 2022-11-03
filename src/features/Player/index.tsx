@@ -7,11 +7,12 @@ import { flushSync } from 'react-dom'
 
 import PlayerInfo from './PlayerInfo'
 
-const src =
-  'https://webfs.ali.kugou.com/202211011553/c576126f2c8a519eaa0bbfb4d0ea0e01/KGTX/CLTX001/6f64d67c0e499c0636a85807ec0f0ec5.mp3'
+let isInit = true
+
 const Player: React.FC = () => {
   const playerRef = useRef<HTMLAudioElement | null>(null)
   const [isPlay, setIsPlay] = useState<boolean>(false)
+  const [src, setSrc] = useState<string>('')
   const [rate, setRate] = useState<number>(0)
 
   const isDraw = useRef<boolean>(false)
@@ -20,9 +21,10 @@ const Player: React.FC = () => {
       const {
         data: { data },
       } = await SongUrl({ id: 1842865092 })
-      console.log(data[0].url)
+      setSrc(data[0].url)
+      isInit = false
     }
-    void getUrl()
+    if (isInit) void getUrl()
   }, [])
 
   const handleEnded = (): void => {

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 interface LoadingType {
   className?: string
   callback: () => void
-  [name: string]: any
+  [name: string]: unknown
 }
 
 const Loading: React.FC<LoadingType> = (props: LoadingType) => {

@@ -1,13 +1,15 @@
 import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/effect-cards'
-import './index.css'
 
+import type { BannerItemType } from '@type/api'
 import React from 'react'
 import { Autoplay, EffectCards } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
+import styles from './index.module.css'
 interface SwiperPropsType {
-  swiperList: any[]
+  swiperList: BannerItemType[]
 }
 
 const SwiperCard: React.FC<SwiperPropsType> = (props) => {
@@ -23,7 +25,7 @@ const SwiperCard: React.FC<SwiperPropsType> = (props) => {
         effect={'cards'}
         grabCursor={true}
         modules={[EffectCards, Autoplay]}
-        className="flex justify-center items-center rounded-md"
+        className={'flex justify-center items-center rounded-md ' + styles.swiper}
       >
         {swiperList.map((ele, idx) => (
           <SwiperSlide className="rounded-xl" key={idx}>

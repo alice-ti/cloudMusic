@@ -6,7 +6,7 @@ type PlayType = (id: number) => void
 interface ListType {
   id: number
   coverImgUrl: string
-  [name: string]: any
+  [name: string]: unknown
 }
 
 interface PropListType extends HTMLAttributes<HTMLDivElement> {

@@ -1,6 +1,12 @@
 // 轮播
+export declare interface BannerItemType {
+  url: string
+  imageUrl: string
+  [name: string]: unknown
+}
+
 export interface BannerType {
-  banners: any[]
+  banners: BannerItemType[]
 }
 
 // 推荐歌曲
@@ -8,7 +14,7 @@ export interface RecSongType {
   id: number
   name: string
   picUrl: string
-  [name: string]: any
+  [name: string]: unknown
 }
 
 // 推荐歌单
@@ -28,14 +34,14 @@ export interface PlaylistCateType {
     name: string
     resourceCount: number
     type: number
-    [name: string]: any
+    [name: string]: unknown
   }>
 }
 
 // 推荐分类
 export interface ToplistType {
-  playlists: any[]
-  [name: string]: any
+  playlists: unknown[]
+  [name: string]: unknown
 }
 
 // 专辑类型
@@ -43,14 +49,14 @@ export interface AlbumType {
   picUrl: string
   name: string
   id: number
-  [name: string]: any
+  [name: string]: unknown
 }
 
 // 歌手类型
 export interface SingerType {
   id: number
   name: string
-  [name: string]: any
+  [name: string]: unknown
 }
 
 // 歌曲类型
@@ -61,7 +67,7 @@ export interface SongType {
   dt: number
   al: AlbumType
   ar: SingerType[]
-  [name: string]: any
+  [name: string]: unknown
 }
 
 // 歌单歌曲
@@ -76,13 +82,13 @@ export interface PlaylistType {
   trackCount: number
   coverImgUrl: string
   description: string
-  [name: string]: any
+  [name: string]: unknown
 }
 
 // 歌单详情
 export interface PlaylistDetailsType {
   playlist: PlaylistType
-  privileges: any[]
+  privileges: unknown[]
 }
 
 // api 所有歌曲
@@ -110,7 +116,7 @@ interface SongUrlItem {
   id: number // 歌曲id
   url: string // 歌曲url
   time: number // 歌曲时长
-  [name: string]: any
+  [name: string]: unknown
 }
 // api 歌曲url response
 export interface SongUrlResponse {
