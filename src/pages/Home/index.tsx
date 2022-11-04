@@ -1,8 +1,9 @@
+import SwiperCard from '@components/Swiper'
+import RecomSong from '@features/RecomSong'
 import RecomSongSheet from '@features/RecomSongSheet'
 import type { BannerItemType } from '@type/api'
 import React, { useEffect, useState } from 'react'
 
-import SwiperCard from '@/components/Swiper'
 import { getBanner } from '@/service'
 
 let isInit = false
@@ -25,6 +26,7 @@ const LayouContent: React.FC = () => {
       <main className="flex-1 overflow-y-auto">
         <SwiperCard swiperList={swiperList} />
         {/* <RecomSongSheet /> */}
+        <RecomSong />
       </main>
     </>
   )

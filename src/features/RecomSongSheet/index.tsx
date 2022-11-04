@@ -1,9 +1,8 @@
+import Album from '@components/Album'
+import { getRecSongSheet } from '@service/songSheet'
+import type { RecSongType } from '@type/api'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import Album from '@/components/Album'
-import { getRecSongSheet } from '@/service/songSheet'
-import { RecSongType } from '@/type/api'
 
 const RecomSongSheet: React.FC = () => {
   const [songList, setSongList] = useState<RecSongType[]>()

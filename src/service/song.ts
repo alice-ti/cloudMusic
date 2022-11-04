@@ -1,4 +1,4 @@
-import type { SongUrlResponse, SongUrlType } from '@type/api'
+import type { RecommSongType, SongUrlResponse, SongUrlType } from '@type/api'
 import request from '@utils/request'
 import { AxiosResponse } from 'axios'
 
@@ -13,6 +13,19 @@ export const SongUrl = async (params: SongUrlType): Promise<AxiosResponse<SongUr
     data: {
       id,
       level,
+    },
+  })
+}
+
+/**
+ * @description 每日推荐歌曲
+ * - 说明 : 调用此接口 , 可获得每日推荐歌曲 ( 需要登录 )
+ * @returns
+ */
+export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongType[]>> => {
+  return await request<RecommSongType[]>('/recommend/songs', 'GET', {
+    data: {
+      timestamp: Date.now(),
     },
   })
 }

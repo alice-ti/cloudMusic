@@ -122,3 +122,13 @@ interface SongUrlItem {
 export interface SongUrlResponse {
   data: SongUrlItem[]
 }
+
+// api recomm song
+export interface RecommSongType {
+  picUrl: string // 歌曲海报
+  id: number // 歌曲id
+  playCount: number
+  trackCount: number
+  trackNumberUpdateTime: number
+  [name: string]: unknown
+}
