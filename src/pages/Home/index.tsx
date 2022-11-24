@@ -1,4 +1,5 @@
 import SwiperCard from '@components/Swiper'
+import RecommFM from '@features/RecomFM'
 import RecomSong from '@features/RecomSong'
 import RecomSongSheet from '@features/RecomSongSheet'
 import type { BannerItemType } from '@type/api'
@@ -24,9 +25,10 @@ const LayouContent: React.FC = () => {
   return (
     <>
       <main className="flex-1 overflow-y-auto">
-        <SwiperCard swiperList={swiperList} />
-        {/* <RecomSongSheet /> */}
-        <RecomSong />
+        {/* <SwiperCard swiperList={swiperList} /> */}
+        <RecomSongSheet />
+        {/* <RecomSong /> */}
+        {/* <RecommFM /> */}
       </main>
     </>
   )

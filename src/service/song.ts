@@ -18,6 +18,20 @@ export const SongUrl = async (params: SongUrlType): Promise<AxiosResponse<SongUr
 }
 
 /**
+ * @description 调用此接口 , 传入音乐 id(支持多个 id, 用 , 隔开), 可获得歌曲详情(dt为歌曲时长)
+ * @param params 必选参数: ids: 音乐 id, 如 ids=347230  ids=347230,347231
+ * @returns
+ */
+export const SongDetail = async (params: any): Promise<AxiosResponse<any>> => {
+  const { ids } = params
+  return await request('/song/detail', 'GET', {
+    data: {
+      ids,
+    },
+  })
+}
+
+/**
  * @description 每日推荐歌曲
  * - 说明 : 调用此接口 , 可获得每日推荐歌曲 ( 需要登录 )
  * @returns

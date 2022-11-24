@@ -28,6 +28,7 @@
       "@service/*": ["src/service/*"],
       "@features/*": ["src/features/*"],
       "@components/*": ["src/components/*"],
+      "@application/*": ["src/application/*"],
       "@router/*": ["src/router/*"]
     }
   },

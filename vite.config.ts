@@ -28,6 +28,7 @@ export default defineConfig({
       '@router': resolve(__dirname, './src/router'),
       '@components': resolve(__dirname, './src/components'),
       '@features': resolve(__dirname, './src/features'),
+      '@application': resolve(__dirname, './src/application'),
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
   },

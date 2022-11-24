@@ -132,3 +132,15 @@ export interface RecommSongType {
   trackNumberUpdateTime: number
   [name: string]: unknown
 }
+
+// api 私人FM
+export interface RecomFMType {
+  code: number
+  popAdjust: boolean
+  data: Array<{
+    album: AlbumType
+    name: string
+    id: number
+    [name: string]: unknown
+  }>
+}

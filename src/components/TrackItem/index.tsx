@@ -1,8 +1,10 @@
 import Img from '@components/Img'
 import React, { CSSProperties, useState } from 'react'
 
+import player from '@/application/player'
 import { SingerType, SongType } from '@/type/api'
 import { formatTime } from '@/utils/time'
+
 interface TrackItemType {
   songProps: SongType
   style?: CSSProperties
@@ -15,10 +17,12 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
     songProps: {
       name,
       dt,
+      id: SongId,
       ar,
-      al: { name: AlbumName, picUrl },
+      al: { name: AlbumName, id: AlbumId, picUrl },
     },
   } = props
+
   const formatSingerName = (arr: SingerType[]): string => {
     let re = ''
     arr.forEach((ele, idx) => (re += `${idx !== 0 ? ',' : ''}${ele.name}`))
@@ -27,6 +31,10 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
 
   const handleMouseEnter = (): void => setShowLike(true)
   const handleMouseLeave = (): void => setShowLike(false)
+
+  const selectSong = (): void => {
+    console.log(player)
+  }
 
   return (
     <>
@@ -42,7 +50,9 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
           <div className="text-gray-600 cursor-pointer hover:underline">{formatSingerName(ar)}</div>
         </div>
         <div className="flex-1 flex cursor-pointer hover:underline">{AlbumName}</div>
-        <button className={showLike ? 'mx-10' : 'mx-10 invisible'}>T^T</button>
+        <button className={showLike ? 'mx-10' : 'mx-10 invisible'} onClick={selectSong}>
+          T^T
+        </button>
         <div className="mr-4">{formatTime(dt)}</div>
       </div>
     </>

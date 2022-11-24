@@ -12,6 +12,7 @@ const defaultCovers = [
 
 const RecomSong: React.FC = () => {
   const [cover, setCover] = useState<string>('')
+
   useEffect(() => {
     const getSong = async (): Promise<void> => {
       const { data } = await dailyRecommendTracks()
@@ -26,8 +27,8 @@ const RecomSong: React.FC = () => {
 
   return (
     <>
-      <div>
-        <Img src={cover} />
+      <div className="w-[28rem] h-[14rem] relative rounded-md overflow-hidden select-none">
+        <Img className={'w-full aspect-square animate-[moveTo_34s_linear_infinite]'} src={cover} />
       </div>
     </>
   )

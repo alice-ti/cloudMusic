@@ -1,7 +1,9 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 import Cover from '@/components/Cover'
 import Icon from '@/components/SvgIcon'
+import { AppDispatch } from '@/store'
 import { PlaylistType } from '@/type/api'
 import { formatDate } from '@/utils/time'
 
@@ -13,6 +15,7 @@ const Introduce: React.FC<IntroduceType> = (props) => {
   const {
     playDetails: { coverImgUrl, name, description, creator, updateTime, trackCount },
   } = props
+
   return (
     <header className="flex my-10">
       <Cover src={coverImgUrl} className="w-60 h-60 text-white" />
