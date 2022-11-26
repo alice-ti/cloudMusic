@@ -31,18 +31,16 @@ class Player {
   _personalFMNextLoading: boolean // 是否正在缓存私人FM的下一首歌曲
 
   // 播放信息
-  _list: unknown[] // 播放列表
+  _list: SongType[] // 播放列表
   /** 当前播放歌曲在播放列表里的index */
   _current: number
   /** 被随机打乱的播放列表，随机播放模式下会使用此播放列表 */
-  _shuffledList: unknown[]
-  /** 当前播放歌曲在随机列表里面的index */
-  _shuffledCurrent: number
+  _shuffledList: SongType[]
   /** 当前播放列表的信息 */
   _playlistSource: unknown
   /** 当前播放歌曲的详细信息 */
   _currentTrack: SongType
-  _playNextList: unknown[] // 当这个list不为空时，会优先播放这个list的歌
+  _playNextList: SongType[] // 当这个list不为空时，会优先播放这个list的歌
   _isPersonalFM: boolean // 是否是私人FM模式
   _personalFMTrack: { id: number } // 私人FM当前歌曲
   _personalFMNextTrack: { id: number } // 私人FM下一首歌曲信息（为了快速加载下一首）
@@ -53,7 +51,7 @@ class Player {
     this._progress = 0 // 当前播放歌曲的进度
     this._enabled = false // 是否启用Player
     this._playMode = 0
-    this._volume = 1
+    this._volume = 0.7
     this._volumeBeforeMuted = 1 // 用于保存静音前的音量
     this._personalFMLoading = false // 是否正在私人FM中加载新的track
     this._personalFMNextLoading = false // 是否正在缓存私人FM的下一首歌曲
@@ -62,9 +60,8 @@ class Player {
     this._list = [] // 当前播放列表
     this._current = 0 // 当前播放歌曲在播放列表里的index
     this._shuffledList = [] // 被随机打乱的播放列表，随机播放模式下会使用此播放列表
-    this._shuffledCurrent = 0 // 当前播放歌曲在随机列表里面的index
     this._playlistSource = { type: 'album', id: 123 } // 当前播放列表的信息
-    this._currentTrack = { id: 1842865092, name: '测试' } // 当前播放歌曲的详细信息
+    this._currentTrack = { id: 1842865092, name: '测试', al: { picUrl: '' } } // 当前播放歌曲的详细信息
     this._playNextList = [] // 当这个list不为空时，会优先播放这个list的歌
     this._isPersonalFM = false // 是否是私人FM模式
     this._personalFMTrack = { id: 0 } // 私人FM当前歌曲
@@ -111,7 +108,7 @@ class Player {
     }
   }
 
-  get list(): unknown[] {
+  get list(): SongType[] {
     switch (this._playMode) {
       case 0:
         return this._list
@@ -122,25 +119,21 @@ class Player {
     }
   }
 
-  set list(list: unknown[]) {
+  set list(list: SongType[]) {
     this._list = list
   }
 
+  /**
+   * @description 当前播放歌曲的index
+   */
   get current(): number {
     // todo 返回当前index
-    switch (this._playMode) {
-      case 0:
-        return this._current
-      case 1:
-        return this._shuffledCurrent
-      default:
-        return -1
-    }
+    return this.list.findIndex((ele) => ele.id === this.currentTrackID)
   }
 
-  set current(current) {
-    // todo
-    this._current = current
+  /** 当前歌曲详细信息 */
+  get currentTrack(): SongType {
+    return this._currentTrack
   }
 
   /** 当前歌曲id */
@@ -179,7 +172,8 @@ class Player {
    * @description 播放
    */
   play(): void {
-    if (this._playing) return
+    const playing = this._howler?.playing()
+    if (playing !== undefined && playing) return
     this._howler?.play()
     this._playing = true
   }
@@ -218,23 +212,47 @@ class Player {
   /**
    * @description 下一首歌曲回调
    */
-  _nextTrackCallback(): void {}
+  _nextTrackCallback(): void {
+    console.log('next callback')
+    this._playNextTrack()
+  }
 
   /**
    * @description 播放下一首歌曲
    */
-  _playNextTrack(): void {}
+  _playNextTrack(): void {
+    const [TrackId] = this._getNextTrack()
+
+    if (TrackId !== -1) void this._replaceCurrentTrack(TrackId)
+  }
+
   /**
    * @description 播放上一首歌曲
    */
   _playPrevTrack(): void {}
 
   /**
+   * @description 获取下一首歌曲的信息
+   * @returns
+   */
+  _getNextTrack(): [number] {
+    let TrackId = -1
+    if (this._playNextList.length > this.current) {
+      TrackId = this._playNextList[this.current + 1].id
+    }
+
+    return [TrackId]
+  }
+
+  /**
    * @description 更换播放列表
    */
-  replacePlaylist(): void {
+  async replacePlaylist(id: number): Promise<void> {
     switch (this.playMode) {
       case 0:
+        await this.getAlbumById(id)
+        this._playNextList = this.list
+        console.log(this.list, this._playNextList)
         break
 
       default:

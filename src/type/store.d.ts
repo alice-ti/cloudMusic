@@ -1,5 +1,9 @@
 export interface SongType {
   name: string
   id: number
-  [name: string]: unknown
+  al: {
+    picUrl: string
+    [name: string]: unknown
+  }
+  [name: string]: any
 }

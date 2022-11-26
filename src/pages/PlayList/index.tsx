@@ -54,7 +54,7 @@ const Songsheet: React.FC = () => {
         {/* todo 使用虚拟列表替换 */}
         <div>
           {playList?.map((ele, idx) => (
-            <TrackItem songProps={ele} key={idx} />
+            <TrackItem songProps={ele} key={idx} playlistId={Number(id)} />
           ))}
         </div>
         <LoadMore text="加载全部" className="mx-auto mt-6" onClick={loadAll} />

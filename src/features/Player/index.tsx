@@ -42,13 +42,13 @@ const Player: React.FC = (props) => {
   }
 
   return (
-    <div className="relative h-full flex flex-row items-center">
+    <div className="relative px-10 box-border h-full flex flex-row items-center">
       <PlayerInfo />
-      <div className="flex flex-row items-center">
+      <div className="flex-1 flex flex-row justify-center items-center">
         <Icon name="previous" className="cursor-pointer w-6 aspect-square" />
         <Icon
           name={isPlay ? 'play' : 'pause'}
-          className="cursor-pointer w-8 aspect-square"
+          className="mx-4 cursor-pointer w-8 aspect-square"
           onClick={togglePlay}
         />
         <Icon name="next" className="cursor-pointer w-6 aspect-square" />
@@ -61,13 +61,13 @@ const Player: React.FC = (props) => {
         onAferChange={handleAfterChange}
         trackStyle={{ background: '#862e9c' }}
         handleStyle={{
-          background: 'transparent',
-          border: 'none',
-          boxShadow: 'none',
+          background: '#f5f6fa',
+          // height: '100%',
+          // marginTop: '0',
+          border: '2px solid #862e9c',
+          boxShadow: '0 0 2px 1px gray',
           transform: 'translateX(-100%)',
-          marginTop: '0',
           opacity: '1',
-          height: '100%',
           width: 'auto',
           aspectRatio: '1/1',
         }}

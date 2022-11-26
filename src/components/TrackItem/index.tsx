@@ -1,25 +1,29 @@
 import Img from '@components/Img'
 import React, { CSSProperties, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import player from '@/application/player'
-import { SingerType, SongType } from '@/type/api'
+import { AppDispatch } from '@/store'
+import { switchSongsAsync } from '@/store/features/player'
+import type { SingerType, SongType } from '@/type/api'
 import { formatTime } from '@/utils/time'
-
 interface TrackItemType {
   songProps: SongType
+  playlistId: number
   style?: CSSProperties
 }
 
 const TrackItem: React.FC<TrackItemType> = (props) => {
   const [showLike, setShowLike] = useState<boolean>(false)
+  const dispatch = useDispatch<AppDispatch>()
   const {
     style,
+    playlistId,
     songProps: {
       name,
       dt,
       id: SongId,
       ar,
-      al: { name: AlbumName, id: AlbumId, picUrl },
+      al: { name: AlbumName, picUrl },
     },
   } = props
 
@@ -33,7 +37,7 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
   const handleMouseLeave = (): void => setShowLike(false)
 
   const selectSong = (): void => {
-    console.log(player)
+    void dispatch(switchSongsAsync({ SongId, playlistId }))
   }
 
   return (
