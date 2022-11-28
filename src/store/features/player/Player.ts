@@ -3,6 +3,8 @@ import { getPlaylistAll } from '@service/songSheet'
 import type { SongType } from '@type/store'
 import { Howl, Howler } from 'howler'
 
+import { events } from '@/application/Pubsub'
+
 /**
  * @readonly
  * @enum {string}
@@ -327,6 +329,8 @@ class Player {
     const { data } = await SongDetail({ ids: id })
     const track = data.songs[0]
     this._currentTrack = track
+    events.publish('track', this.currentTrackID)
+
     await this._replaceCurrentTrackAudio(track, autoplay, true, ifUnplayableThen)
   }
 

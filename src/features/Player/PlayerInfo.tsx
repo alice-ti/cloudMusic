@@ -1,11 +1,27 @@
 import Img from '@components/Img'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import type { AppDispatch, RootState } from '@store/index'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '@/store'
+import { events } from '@/application/Pubsub'
+import { switchSongs } from '@/store/features/player'
 
-const PlayerInfo: React.FC = () => {
+const PlayerInfo: React.FC = (props) => {
+  const dispatch = useDispatch<AppDispatch>()
   const songInfo = useSelector((state: RootState) => state.player.songInfo)
+  const [id, setId] = useState<number>(songInfo.id)
+
+  useEffect(() => {
+    events.subscribe('track', (id: number) => {
+      console.log('sub', id)
+      setId(id)
+    })
+  }, [])
+
+  useEffect(() => {
+    dispatch(switchSongs())
+  }, [id])
+
   return (
     <>
       <Img src={songInfo?.al.picUrl} className="w-14 rounded-md mr-4 select-none" />
