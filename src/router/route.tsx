@@ -8,7 +8,8 @@ import LayoutHeader from '@/features/LayoutHeader'
 const Home = lazy(async () => await import('@pages/Home'))
 const Mine = lazy(async () => await import('@pages/Mine'))
 const Find = lazy(async () => await import('@pages/Find'))
-const PlayList = lazy(async () => await import('@/pages/PlayList'))
+const Song = lazy(async () => await import('@pages/Song'))
+const PlayList = lazy(async () => await import('@pages/PlayList'))
 
 const BaseLayout: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const routes: RouteType[] = [
 
   { path: '/find', element: <Find />, meta: { title: 'Find' } },
   { path: '/mine', element: <Mine />, meta: { title: 'Mine' } },
+  { path: '/song', element: <Song />, meta: { title: 'Song' } },
 ]
 
 const Route = (): React.ReactElement | null => useRoutes(routes as RouteObject[])

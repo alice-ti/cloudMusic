@@ -8,6 +8,12 @@ interface PlayerStateType {
   playMode: number
 }
 
+interface SwitchSongsAsyncParamsType {
+  SongId: number
+  playlistId: number
+  [name: string]: unknown
+}
+
 const initialState: PlayerStateType = {
   songInfo: {
     name: '',
@@ -21,7 +27,7 @@ const initialState: PlayerStateType = {
 
 export const switchSongsAsync = createAsyncThunk(
   'player/switchSongs',
-  async (params: any, { dispatch }) => {
+  async (params: SwitchSongsAsyncParamsType, { dispatch }) => {
     const { SongId, playlistId } = params
     await player.replacePlaylist(playlistId)
     await player._replaceCurrentTrack(SongId)

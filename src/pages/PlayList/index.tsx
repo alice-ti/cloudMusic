@@ -28,6 +28,8 @@ const Songsheet: React.FC = () => {
       setPlayList(playlist.tracks.filter((ele, idx) => idx < 10))
     }
     if (!isInit) void init()
+
+    return () => (isInit = false)
   }, [])
 
   // 加载全部

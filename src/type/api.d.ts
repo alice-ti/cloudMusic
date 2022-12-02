@@ -144,3 +144,12 @@ export interface RecomFMType {
     [name: string]: unknown
   }>
 }
+
+// api 歌词
+export interface LyricType {
+  lrc: {
+    lyric: string
+    version: number
+  }
+  [name: string]: any
+}

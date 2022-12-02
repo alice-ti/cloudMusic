@@ -63,7 +63,7 @@ class Player {
     this._current = 0 // 当前播放歌曲在播放列表里的index
     this._shuffledList = [] // 被随机打乱的播放列表，随机播放模式下会使用此播放列表
     this._playlistSource = { type: 'album', id: 123 } // 当前播放列表的信息
-    this._currentTrack = { id: 1842865092, name: '测试', al: { picUrl: '' } } // 当前播放歌曲的详细信息
+    this._currentTrack = { id: 33894312, name: '测试', al: { picUrl: '' } } // 当前播放歌曲的详细信息
     this._playNextList = [] // 当这个list不为空时，会优先播放这个list的歌
     this._isPersonalFM = false // 是否是私人FM模式
     this._personalFMTrack = { id: 0 } // 私人FM当前歌曲
@@ -109,6 +109,14 @@ class Player {
       this._howler.seek(value)
     }
   }
+
+  // seek(time = null): number {
+  //   if (time !== null) {
+  //     this._howler?.seek(time)
+  //     if (this._playing) this._playDiscordPresence(this._currentTrack, this.seek())
+  //   }
+  //   return this._howler === null ? 0 : this._howler.seek()
+  // }
 
   get list(): SongType[] {
     switch (this._playMode) {
@@ -158,7 +166,20 @@ class Player {
 
     this._loadSelfFromLocalStorage()
 
-    void this._replaceCurrentTrack(1842865092)
+    void this._replaceCurrentTrack(33894312)
+
+    // this._setIntervals()
+  }
+
+  _setIntervals(): void {
+    // 同步播放进度
+    // TODO: 如果 _progress 在别的地方被改变了，
+    // 这个定时器会覆盖之前改变的值，是bug
+    setInterval(() => {
+      if (this._howler === null) return
+      console.log('howler', this._howler.seek())
+      this._progress = this._howler.seek()
+    }, 1000)
   }
 
   /**

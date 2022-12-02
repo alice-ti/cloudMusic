@@ -14,7 +14,7 @@ class Events {
     // if (this.eventObj.hasOwnProperty(topic)) {
     if (Object.prototype.hasOwnProperty.call(this.eventObj, topic)) {
       const fn = this.eventObj[topic]
-      fn.forEach((fn: any) => {
+      fn.forEach((fn: Function) => {
         fn.apply(this, args)
       })
     }
@@ -43,7 +43,7 @@ class Events {
     }
     if (handler !== undefined) {
       // 如果处理函数存在，则从主题处理数组中删除它
-      this.eventObj[topic] = this.eventObj[topic].filter((x: any) => x !== handler)
+      this.eventObj[topic] = this.eventObj[topic].filter((x: Function) => x !== handler)
       return true
     } else {
       // 否则直接删除该主题
