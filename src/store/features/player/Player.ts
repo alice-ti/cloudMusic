@@ -104,7 +104,7 @@ class Player {
     return this._howler?.seek() ?? 0
   }
 
-  set progress(value) {
+  set progress(value: number) {
     if (this._howler !== null) {
       this._howler.seek(value)
     }

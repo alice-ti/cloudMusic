@@ -153,3 +153,26 @@ export interface LyricType {
   }
   [name: string]: any
 }
+
+// api 歌手 Singer
+export interface SingerInfoType {
+  data: {
+    user: {
+      avatarUrl: string
+      backgroundUrl: string
+      [name: string]: any
+    }
+    artist: {
+      id: number
+      name: string
+      albumSize: number
+      musicSize: number
+      mvSize: number
+      identifyTag: string[]
+      briefDesc: string
+      [name: string]: any
+    }
+    videoCount: number
+  }
+  [name: string]: unknown
+}

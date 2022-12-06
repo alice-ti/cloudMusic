@@ -9,6 +9,7 @@ const Home = lazy(async () => await import('@pages/Home'))
 const Mine = lazy(async () => await import('@pages/Mine'))
 const Find = lazy(async () => await import('@pages/Find'))
 const Song = lazy(async () => await import('@pages/Song'))
+const Singer = lazy(async () => await import('@pages/Singer'))
 const PlayList = lazy(async () => await import('@pages/PlayList'))
 
 const BaseLayout: React.FC = () => {
@@ -30,6 +31,7 @@ const routes: RouteType[] = [
     element: <BaseLayout />,
     children: [
       { path: '/index', element: <Home />, meta: { title: 'Index' } },
+      { path: '/singer/:id', element: <Singer />, meta: { title: 'Singer' } },
       { path: '/playlist/:id', element: <PlayList />, meta: { title: 'SongSheet' } },
     ],
   },

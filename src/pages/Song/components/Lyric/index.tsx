@@ -1,11 +1,15 @@
+import type { RootState } from '@store/index'
 import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import lrc from '@/application/Lyric'
 import player from '@/application/player'
+import { events } from '@/application/Pubsub'
 
 const Lyric: React.FC = () => {
-  const [progress, setProgress] = useState(0)
+  // const [progress, setProgress] = useState(0)
   const [lyricList, setLyricList] = useState<string[]>([])
+  const Song = useSelector((state: RootState) => state.player.songInfo)
 
   const lyricInterval = useRef(0)
   const currLine = useRef<HTMLElement | null>(null)
@@ -14,16 +18,19 @@ const Lyric: React.FC = () => {
 
   useEffect(() => {
     const init = async (): Promise<void> => {
-      await lrc.getLrc(33894312)
-      console.log(lrc, player)
+      await lrc.getLrc(Song.id)
       timeList = Object.keys(lrc?.timeTags)
       const lrcList = Object.values(lrc?.timeTags)
       setLyricList(lrcList)
 
       update()
     }
-    void init()
-  }, [])
+    if (Song.id !== -1) void init()
+
+    events.subscribe('track', (id: number) => {
+      void init()
+    })
+  }, [Song.id])
 
   useEffect(() => {}, [])
 
@@ -44,7 +51,7 @@ const Lyric: React.FC = () => {
 
   const update = (): void => {
     lyricInterval.current = setInterval(() => {
-      console.log(player?._howler?.seek())
+      // console.log(player?._howler?.seek())
       const timev = player?.progress ?? 0
       scroll(timev * 1000)
     }, 1000)
@@ -52,7 +59,7 @@ const Lyric: React.FC = () => {
 
   return (
     <div className="h-screen">
-      <button onClick={() => player.togglePlayStatus()}>Btn</button>
+      <button onClick={() => (player.progress = 200)}>Btn</button>
       <ul className="h-full">
         {lyricList?.map((ele, idx) => {
           return (
