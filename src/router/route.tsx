@@ -33,12 +33,12 @@ const routes: RouteType[] = [
       { path: '/index', element: <Home />, meta: { title: 'Index' } },
       { path: '/singer/:id', element: <Singer />, meta: { title: 'Singer' } },
       { path: '/playlist/:id', element: <PlayList />, meta: { title: 'SongSheet' } },
+      { path: '/song', element: <Song />, meta: { title: 'Song' } },
     ],
   },
 
   { path: '/find', element: <Find />, meta: { title: 'Find' } },
   { path: '/mine', element: <Mine />, meta: { title: 'Mine' } },
-  { path: '/song', element: <Song />, meta: { title: 'Song' } },
 ]
 
 const Route = (): React.ReactElement | null => useRoutes(routes as RouteObject[])

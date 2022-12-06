@@ -26,27 +26,27 @@ const Lyric: React.FC = () => {
       update()
     }
     if (Song.id !== -1) void init()
-
-    events.subscribe('track', (id: number) => {
-      void init()
-    })
   }, [Song.id])
 
   useEffect(() => {}, [])
 
-  const scroll = (time: number): void => {
+  const scroll = (time: number): number => {
     const currIndex = timeList.findIndex((ele, idx, _arr) => {
       const curr = Number(ele)
       const next = idx + 1 === _arr.length ? Infinity : Number(_arr[idx + 1])
       return curr <= time && next > time
     })
-    // console.log(time, currIndex, timeList[currIndex])
+
+    currLine.current?.classList.remove('text-red-600')
     currLine.current = document.querySelector(`#line-${currIndex}`)
     currLine.current?.classList.add('text-red-600')
-    currLine.current?.scrollIntoView({
-      behavior: 'smooth', // 平滑过渡
-      block: 'center', // 上边框与视窗顶部平齐
-    })
+    // TODO 歌词滚动待处理
+    // currLine.current?.scrollIntoView({
+    //   behavior: 'smooth', // 平滑过渡
+    //   block: 'start', // 上边框与视窗顶部平齐
+    // })
+
+    return currIndex
   }
 
   const update = (): void => {

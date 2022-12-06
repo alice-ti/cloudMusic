@@ -1,14 +1,11 @@
 import Img from '@components/Img'
-import type { SingerType, SongType } from '@type/api'
+import type { SongType } from '@type/api'
 import React from 'react'
+
+import { formatSingerName } from '@/utils/common'
 
 const TopSongItem: React.FC<SongType> = (props) => {
   const { al, ar, name } = props
-  const formatSingerName = (arr: SingerType[]): string => {
-    let re = ''
-    arr.forEach((ele, idx) => (re += `${idx !== 0 ? ',' : ''}${ele.name}`))
-    return re
-  }
   return (
     <section className="flex flex-row">
       <Img src={al.picUrl} className="w-14 rounded-md mr-4 select-none" />

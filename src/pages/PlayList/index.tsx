@@ -29,7 +29,9 @@ const Songsheet: React.FC = () => {
     }
     if (!isInit) void init()
 
-    return () => (isInit = false)
+    return () => {
+      isInit = false
+    }
   }, [])
 
   // 加载全部

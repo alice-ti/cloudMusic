@@ -1,10 +1,10 @@
 import Slider from '@components/Slider'
-import Icon from '@components/SvgIcon'
 import React, { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 
 import player from '@/application/player'
 
+import PlaryerControl from './PlayerControl'
 import PlayerInfo from './PlayerInfo'
 import PlayerSetting from './PlayerSetting'
 
@@ -44,15 +44,7 @@ const Player: React.FC = (props) => {
   return (
     <div className="relative px-10 box-border h-full flex flex-row items-center">
       <PlayerInfo />
-      <div className="flex-1 flex flex-row justify-center items-center">
-        <Icon name="previous" className="cursor-pointer w-6 aspect-square" />
-        <Icon
-          name={isPlay ? 'play' : 'pause'}
-          className="mx-4 cursor-pointer w-8 aspect-square"
-          onClick={togglePlay}
-        />
-        <Icon name="next" className="cursor-pointer w-6 aspect-square" />
-      </div>
+      <PlaryerControl isPlay={isPlay} togglePlay={togglePlay} />
       <PlayerSetting />
       <Slider
         className="!w-full !p-0 !h-1 !absolute left-0 top-0"
