@@ -24,7 +24,7 @@ const formatTime = (Milliseconds: number, format = 'HH:MM:SS'): string => {
   return ''
 }
 
-const formatDate = (timestamp: number, format = 'MMM D, YYYY'): string => {
+const formatDate = (timestamp: number | string, format = 'MMM D, YYYY'): string => {
   if (typeof timestamp === 'undefined') return ''
   // 国际化 i18
   // if (locale.locale === 'zh-CN') format = 'YYYY年MM月DD日'

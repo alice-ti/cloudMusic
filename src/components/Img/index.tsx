@@ -12,7 +12,7 @@ interface ImagePropsType extends HTMLAttributes<HTMLImageElement> {
 // } = {}
 
 const Img: React.FC<ImagePropsType> = (props) => {
-  const { src, defaultImgSrc = EmptyImage, ...restProps } = props
+  const { src, defaultImgSrc = EmptyImage, className = '', ...restProps } = props
 
   const [imgLoaded, setImgLoaded] = useState<boolean>(false)
 
@@ -30,7 +30,13 @@ const Img: React.FC<ImagePropsType> = (props) => {
   }, [src])
 
   // 真实图片未加载完成，先显示占位图
-  return <img src={imgLoaded ? src : defaultImgSrc} {...restProps} />
+  return (
+    <img
+      src={imgLoaded ? src : defaultImgSrc}
+      className={'shadow-xl hover:shadow-2xl object-cover ' + className}
+      {...restProps}
+    />
+  )
 }
 
 export default Img

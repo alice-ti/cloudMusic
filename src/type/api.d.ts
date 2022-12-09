@@ -44,25 +44,43 @@ export interface ToplistType {
   [name: string]: unknown
 }
 
-// 专辑类型
+// base 专辑类型
 export interface AlbumType {
   picUrl: string
   name: string
+  type: string
   id: number
+  size: number
+  description: string
+  publishTime: number
   [name: string]: unknown
 }
 
-// 歌手类型
+// base Mv类型
+export interface MvType {
+  artistName: string
+  artist: SingerType
+  imgurl: string
+  imgurl16v9: number
+  name: string
+  publishTime: string
+  status: number
+  playCount: number
+  duration: number
+}
+
+// base 歌手类型
 export interface SingerType {
   id: number
   name: string
   [name: string]: unknown
 }
 
-// 歌曲类型
+// base 歌曲类型
 export interface SongType {
   name: string
   id: number
+  alia: string[]
   // 歌曲时长
   dt: number
   al: AlbumType
@@ -175,4 +193,39 @@ export interface SingerInfoType {
     videoCount: number
   }
   [name: string]: unknown
+}
+
+// api singer
+export interface SingerTopPlaylistType {
+  songs: SongType[]
+  code: number
+  more: boolean
+}
+
+// api singer singe/album
+export interface SingerAlbumType {
+  artist: {
+    name: string
+    [name: string]: any
+  }
+  hotAlbums: AlbumType[]
+  more: boolean
+}
+
+// api singer singer/mv
+export interface SingerMvType {
+  code: number
+  time: number
+  mvs: MvType[]
+  hasMore: boolean
+}
+
+// api singer singer/sim
+// export interface SingerSimilarType { }
+
+// api album
+export interface AlbumDetailType {
+  code: number
+  album: AlbumType
+  songs: SongType[]
 }

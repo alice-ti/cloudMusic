@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 import lrc from '@/application/Lyric'
 import player from '@/application/player'
-import { events } from '@/application/Pubsub'
 
 const Lyric: React.FC = () => {
   // const [progress, setProgress] = useState(0)

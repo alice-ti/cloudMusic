@@ -1,9 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
-import Cover from '@/components/Cover'
+import Img from '@/components/Img'
 import Icon from '@/components/SvgIcon'
-import { AppDispatch } from '@/store'
 import { PlaylistType } from '@/type/api'
 import { formatDate } from '@/utils/time'
 
@@ -18,7 +16,7 @@ const Introduce: React.FC<IntroduceType> = (props) => {
 
   return (
     <header className="flex my-10">
-      <Cover src={coverImgUrl} className="w-60 h-60 text-white" />
+      <Img src={coverImgUrl} className="w-60 h-60 rounded-2xl text-white" />
       <div className="pl-10 flex flex-col justify-between">
         <div className="text-4xl font-bold">{name}</div>
         <div className="">
