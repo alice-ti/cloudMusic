@@ -1,4 +1,10 @@
-import type { LyricType, RecommSongType, SongUrlResponse, SongUrlType } from '@type/api'
+import type {
+  LyricApiType,
+  RecommSongApiType,
+  SongDetailApiType,
+  SongUrlApiType,
+  SongUrlParamsType,
+} from '@type/api'
 import request from '@utils/request'
 import { AxiosResponse } from 'axios'
 
@@ -7,9 +13,11 @@ import { AxiosResponse } from 'axios'
  * @param params id : 音乐 id standard => 标准,higher => 较高, exhigh=>极高, lossless=>无损, hires=>Hi-Res
  * @returns
  */
-export const SongUrl = async (params: SongUrlType): Promise<AxiosResponse<SongUrlResponse>> => {
+export const SongUrl = async (
+  params: SongUrlParamsType
+): Promise<AxiosResponse<SongUrlApiType>> => {
   const { id, level } = params
-  return await request<SongUrlResponse>('/song/url', 'GET', {
+  return await request<SongUrlApiType>('/song/url', 'GET', {
     data: {
       id,
       level,
@@ -22,7 +30,9 @@ export const SongUrl = async (params: SongUrlType): Promise<AxiosResponse<SongUr
  * @param params 必选参数: ids: 音乐 id, 如 ids=347230  ids=347230,347231
  * @returns
  */
-export const SongDetail = async (params: any): Promise<AxiosResponse<any>> => {
+export const SongDetail = async (params: {
+  ids: string | number
+}): Promise<AxiosResponse<SongDetailApiType>> => {
   const { ids } = params
   return await request('/song/detail', 'GET', {
     data: {
@@ -36,8 +46,8 @@ export const SongDetail = async (params: any): Promise<AxiosResponse<any>> => {
  * - 说明 : 调用此接口 , 可获得每日推荐歌曲 ( 需要登录 )
  * @returns
  */
-export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongType[]>> => {
-  return await request<RecommSongType[]>('/recommend/songs', 'GET', {
+export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongApiType[]>> => {
+  return await request<RecommSongApiType[]>('/recommend/songs', 'GET', {
     data: {
       timestamp: Date.now(),
     },
@@ -50,8 +60,8 @@ export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongTy
  * @param id 歌曲id
  * @returns
  */
-export const getLyric = async (id: number): Promise<AxiosResponse<LyricType>> => {
-  return await request<LyricType>('/lyric', 'GET', {
+export const getLyric = async (id: number): Promise<AxiosResponse<LyricApiType>> => {
+  return await request<LyricApiType>('/lyric', 'GET', {
     data: {
       id,
     },

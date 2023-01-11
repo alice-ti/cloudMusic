@@ -1,5 +1,5 @@
 import Album from '@components/Album'
-import { getRecSongSheet } from '@service/songSheet'
+import { getRecSongSheet } from '@/service/songList'
 import type { RecSongType } from '@type/api'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +26,7 @@ const RecomSongSheet: React.FC = () => {
   }, [])
 
   return (
-    <main className="grid grid-cols-5 gap-x-4 gap-y-1.5 px-8 box-border text-white">
+    <main className="grid grid-cols-5 gap-x-8 gap-y-2 box-border text-white">
       {songList?.map((ele) => (
         <div className="my-1.5" key={ele.id}>
           <Album src={ele.picUrl} albumClick={() => goPlaylist(ele.id)} />

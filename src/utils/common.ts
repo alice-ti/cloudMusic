@@ -1,4 +1,4 @@
-import { SingerType } from '@type/api'
+import type { SingerType } from '@type/common'
 
 /**
  * @description 格式化歌手数据

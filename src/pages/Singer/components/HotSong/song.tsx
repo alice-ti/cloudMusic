@@ -1,5 +1,5 @@
 import Img from '@components/Img'
-import type { SongType } from '@type/api'
+import type { SongType } from '@type/common'
 import React from 'react'
 
 import { formatSingerName } from '@/utils/common'

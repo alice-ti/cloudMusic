@@ -1,6 +1,6 @@
 import Img from '@components/Img'
 import { dailyRecommendTracks } from '@service/song'
-import type { RecommSongType } from '@type/api'
+import type { RecommSongApiType } from '@type/api'
 import sample from 'lodash/sample'
 import { useEffect, useState } from 'react'
 
@@ -16,10 +16,10 @@ const RecomSong: React.FC = () => {
   useEffect(() => {
     const getSong = async (): Promise<void> => {
       const { data } = await dailyRecommendTracks()
-      const recomm = sample<RecommSongType[] | string[]>(
+      const recomm = sample<RecommSongApiType[] | string[]>(
         (data as any)?.msg !== null ? data : defaultCovers ?? defaultCovers
       )
-      const src = typeof recomm === 'string' ? recomm : (recomm as RecommSongType)?.picUrl
+      const src = typeof recomm === 'string' ? recomm : (recomm as RecommSongApiType)?.picUrl
       setCover(src)
     }
     void getSong()
@@ -27,7 +27,7 @@ const RecomSong: React.FC = () => {
 
   return (
     <>
-      <div className="w-[28rem] h-[14rem] relative rounded-md overflow-hidden select-none">
+      <div className="w-full aspect-[6/2] relative rounded-md overflow-hidden select-none">
         <Img className={'w-full aspect-square animate-[moveTo_34s_linear_infinite]'} src={cover} />
       </div>
     </>

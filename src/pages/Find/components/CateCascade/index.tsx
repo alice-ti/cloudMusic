@@ -19,7 +19,7 @@ const CateCascade: React.FC<CateCascadeType> = (props) => {
     setCurr(index)
   }
   return (
-    <main className={'py-4 bg-gray-300 select-none ' + (isShow ? 'hidden' : '')}>
+    <main className={'py-4 bg-gray-300 select-none ' + (isShow ? '' : 'hidden')}>
       {Object.values(subCateList).map((ele: any, idx) => (
         <ul className="mt-4" key={idx}>
           <li className="flex" key={1}>

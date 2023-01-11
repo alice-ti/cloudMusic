@@ -1,7 +1,8 @@
 import { SongDetail, SongUrl } from '@service/song'
-import { getPlaylistAll } from '@service/songSheet'
-import type { SongType } from '@type/store'
+import { getPlaylistAll } from '@service/songList'
+import type { SongType } from '@type/common'
 import { Howl, Howler } from 'howler'
+import _ from 'lodash'
 
 import { events } from '@/application/Pubsub'
 
@@ -59,11 +60,22 @@ class Player {
     this._personalFMNextLoading = false // 是否正在缓存私人FM的下一首歌曲
 
     // 播放信息
+    this._currentTrack = {
+      id: 33894312,
+      name: '测试',
+      alia: [],
+      dt: 0,
+      ar: [{ id: -1, name: '' }],
+      al: {
+        picUrl: '',
+        name: '',
+        id: -1,
+      },
+    } // 当前播放歌曲的详细信息
     this._list = [] // 当前播放列表
     this._current = 0 // 当前播放歌曲在播放列表里的index
     this._shuffledList = [] // 被随机打乱的播放列表，随机播放模式下会使用此播放列表
     this._playlistSource = { type: 'album', id: 123 } // 当前播放列表的信息
-    this._currentTrack = { id: 33894312, name: '测试', al: { picUrl: '' } } // 当前播放歌曲的详细信息
     this._playNextList = [] // 当这个list不为空时，会优先播放这个list的歌
     this._isPersonalFM = false // 是否是私人FM模式
     this._personalFMTrack = { id: 0 } // 私人FM当前歌曲
@@ -122,8 +134,8 @@ class Player {
     switch (this._playMode) {
       case 0:
         return this._list
-      case 1:
-        return this._shuffledList
+      case 2:
+        return this.shuffledList
       default:
         return []
     }
@@ -131,6 +143,13 @@ class Player {
 
   set list(list: SongType[]) {
     this._list = list
+  }
+
+  /**
+   * @description 随机播放歌曲列表
+   */
+  get shuffledList(): SongType[] {
+    return _.shuffle(this._list)
   }
 
   /**
@@ -153,7 +172,7 @@ class Player {
 
   // 当前歌曲播放时长
   get currentTrackDuration(): number {
-    const trackDuration = (this._currentTrack.dt as number) ?? 1000
+    const trackDuration = this._currentTrack.dt ?? 1000
     const duration = Math.floor(trackDuration / 1000)
     return duration > 1 ? duration - 1 : duration
   }
@@ -260,6 +279,11 @@ class Player {
    */
   _getNextTrack(): [number] {
     let TrackId = -1
+
+    // 单曲循环
+    if (this.playMode === 3) return [this._currentTrack.id]
+
+    // 正常下一首歌曲
     if (this._playNextList.length > this.current) {
       TrackId = this._playNextList[this.current + 1].id
     }
@@ -271,16 +295,10 @@ class Player {
    * @description 更换播放列表
    */
   async replacePlaylist(id: number): Promise<void> {
-    switch (this.playMode) {
-      case 0:
-        await this.getAlbumById(id)
-        this._playNextList = this.list
-        console.log(this.list, this._playNextList)
-        break
-
-      default:
-        break
-    }
+    await this.getAlbumById(id)
+    this._playNextList = this._list
+    console.log('replacePlaylist')
+    console.log(this._list, this._playNextList)
   }
 
   /**

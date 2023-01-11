@@ -1,12 +1,12 @@
 import type { AxiosResponse } from 'axios'
 
 import type {
+  PlaylistAllApiType,
   PlaylistAllParamsType,
-  PlaylistAllType,
-  PlaylistCateType,
-  PlaylistDetailsType,
-  RecSongSheetType,
-  ToplistType,
+  PlaylistCateApiType,
+  PlaylistDetailsApiType,
+  RecSongSheetApiType,
+  ToplistApiType,
 } from '@/type/api'
 import request from '@/utils/request'
 
@@ -16,8 +16,8 @@ import request from '@/utils/request'
  */
 export const getRecSongSheet = async (
   limit: number = 10
-): Promise<AxiosResponse<RecSongSheetType>> => {
-  return await request<RecSongSheetType>('/personalized', 'GET', {
+): Promise<AxiosResponse<RecSongSheetApiType>> => {
+  return await request<RecSongSheetApiType>('/personalized', 'GET', {
     data: {
       limit,
     },
@@ -31,8 +31,8 @@ export const getRecSongSheet = async (
  * - cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取(/playlist/catlist)
  * - limit: 取出歌单数量 , 默认为 50
  */
-export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistType>> => {
-  return await request<ToplistType>('/top/playlist', 'GET', {
+export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistApiType>> => {
+  return await request<ToplistApiType>('/top/playlist', 'GET', {
     data: params,
   })
 }
@@ -41,8 +41,8 @@ export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistTyp
  * @description 歌单分类
  * @ 说明 : 调用此接口,可获取歌单分类,包含 category 信息
  */
-export const playlistCatlist = async (): Promise<AxiosResponse<PlaylistCateType>> => {
-  return await request<PlaylistCateType>('/playlist/catlist', 'GET')
+export const playlistCatlist = async (): Promise<AxiosResponse<PlaylistCateApiType>> => {
+  return await request<PlaylistCateApiType>('/playlist/catlist', 'GET')
 }
 
 /**
@@ -56,8 +56,8 @@ export const playlistCatlist = async (): Promise<AxiosResponse<PlaylistCateType>
  */
 export const getPlaylistDetails = async (
   id: number
-): Promise<AxiosResponse<PlaylistDetailsType>> => {
-  return await request<PlaylistDetailsType>('/playlist/detail', 'GET', {
+): Promise<AxiosResponse<PlaylistDetailsApiType>> => {
+  return await request<PlaylistDetailsApiType>('/playlist/detail', 'GET', {
     data: {
       id,
     },
@@ -74,9 +74,9 @@ export const getPlaylistDetails = async (
  */
 export const getPlaylistAll = async (
   params: PlaylistAllParamsType
-): Promise<AxiosResponse<PlaylistAllType>> => {
+): Promise<AxiosResponse<PlaylistAllApiType>> => {
   const { id, offset, limit } = params
-  return await request<PlaylistAllType>('/playlist/track/all', 'GET', {
+  return await request<PlaylistAllApiType>('/playlist/track/all', 'GET', {
     data: {
       id,
       offset,

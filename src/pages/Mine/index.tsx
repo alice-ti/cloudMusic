@@ -1,4 +1,5 @@
-import type { PlaylistAllParamsType, SongType } from '@type/api'
+import type { PlaylistAllParamsType } from '@type/api'
+import type { SongType } from '@type/common'
 import React, { useEffect, useRef, useState } from 'react'
 
 import useLoading from '@/components/Loading/useLoading'
@@ -7,7 +8,7 @@ import TrackItem from '@/components/TrackItem'
 import VirtualList from '@/components/VirtualList'
 import LayoutFooter from '@/features/LayoutFooter'
 import LayoutHeader from '@/features/LayoutHeader'
-import { getPlaylistAll } from '@/service/songSheet'
+import { getPlaylistAll } from '@/service/songList'
 
 const Mine: React.FC = () => {
   const loading = useLoading()
@@ -46,7 +47,7 @@ const Mine: React.FC = () => {
       {playList.length > 0 && (
         <VirtualList itemCount={playList.length} getItemHeight={() => 72} ref={virRef}>
           {playList?.map((ele, idx) => (
-            <TrackItem songProps={ele} key={idx} />
+            <TrackItem songProps={ele} key={idx} playlistId={2260474995} />
           ))}
         </VirtualList>
       )}

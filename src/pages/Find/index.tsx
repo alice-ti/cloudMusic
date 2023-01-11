@@ -1,11 +1,12 @@
-import SheetList from '@features/SheetList'
-import { playlistCatlist, topPlaylist } from '@service/songSheet'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import CateCascade from './components/CateCascade'
+import Playlist from '@/features/PlayList'
+import { playlistCatlist, topPlaylist } from '@/service/songList'
+import type { ToplistType } from '@/type/api'
 
-let isInit = false
+import CateBtn from './components/CateBtn'
+import CateCascade from './components/CateCascade'
 
 // 格式化二级分类
 const formatSub = (list: Array<{ category: number; [name: string]: any }>): any => {
@@ -22,31 +23,13 @@ const formatSub = (list: Array<{ category: number; [name: string]: any }>): any 
   return obj
 }
 
-interface CateBtnType {
-  text: string
-  active: boolean
-  subToggle: React.MouseEventHandler
-}
-// 分类按钮
-const CateBtn: React.FC<CateBtnType> = ({ text, active, subToggle }) => (
-  <button
-    className={
-      'mr-3 px-3.5 py-1 rounded-md bg-[#f5f5f5] text-[#7a7a7b] font-bold text-xl hover:bg-fuchsia-100 hover:text-fuchsia-900' +
-      (active ? ' bg-fuchsia-100 text-fuchsia-900' : '')
-    }
-    onClick={subToggle}
-  >
-    {text}
-  </button>
-)
-
 // 发现-歌单
 const Find: React.FC = () => {
   const navigate = useNavigate()
   const [isShowSub, setIsShowSub] = useState<boolean>(false) // 是否展示二级分类
   const [cate, setCate] = useState<string[]>([]) // 一级分类
   const [subCate, setSubCate] = useState<any[]>([]) // 二级分类
-  const [sheetlist, setSheetlist] = useState<any[]>([])
+  const [sheetlist, setSheetlist] = useState<ToplistType[]>([])
 
   // 展示二级分类
   const handleSubToggle = (): void => setIsShowSub(!isShowSub)
@@ -66,14 +49,10 @@ const Find: React.FC = () => {
   }
 
   // to歌单详情
-  const goPlaylist = (id: number): void => {
-    console.log(id)
-    navigate(`/playlist/${id}`)
-  }
+  const goPlaylist = (id: number): void => navigate(`/playlist/${id}`)
 
   useEffect(() => {
     const init = async (): Promise<void> => {
-      isInit = true
       const {
         data: { categories, sub },
       } = await playlistCatlist()
@@ -84,15 +63,12 @@ const Find: React.FC = () => {
 
       setSubCate(formatSub(sub))
     }
-    if (!isInit) {
-      void init()
-      void getTopSheet({ cat: '欧美' })
-    }
+    void init()
+    void getTopSheet({ cat: '全部' })
   }, [])
 
   return (
-    <div className="xl:px-20 box-border">
-      <div>A</div>
+    <div className="xl:px-20 pt-20 box-border">
       <header className="mb-6 flex flex-row">
         {cate.length > 0 &&
           cate.map((ele, idx, _arr) => (
@@ -110,7 +86,7 @@ const Find: React.FC = () => {
         updateSheet={changeSheet}
         isShow={isShowSub}
       />
-      <SheetList list={sheetlist} playDetail={(e) => goPlaylist(e)} />
+      <Playlist list={sheetlist} playDetail={(e) => goPlaylist(e)} />
     </div>
   )
 }

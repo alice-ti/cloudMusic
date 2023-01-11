@@ -1,11 +1,36 @@
+import { useDispatch, useSelector } from 'react-redux'
+
 import Icon from '@/components/SvgIcon'
+import { RootState } from '@/store'
+import { switchPlayMode } from '@/store/features/player'
+
+// 0-顺序播放 1-列表循环 2-随机播放 3-单曲循环 4-心动模式
+const ModeMap: { [name: number]: string } = {
+  0: 'mode-order',
+  1: 'mode-list',
+  2: 'mode-random',
+  3: 'mode-single',
+}
 
 const PlayerSetting: React.FC = () => {
+  const playMode = useSelector((state: RootState) => state.player.playMode)
+  const dispatch = useDispatch()
+  const changePlayMode = (): void => {
+    let num = playMode
+    if (num < Object.keys(ModeMap).length - 1) num += 1
+    else num = 0
+    dispatch(switchPlayMode(num))
+  }
+
   return (
     <>
-      <div className="min-w-[15%] flex flex-row">
-        <Icon name="sequence" />
-        <Icon name="volume" />
+      <div className="min-w-[15%] flex flex-row justify-center">
+        <Icon
+          name={ModeMap[playMode]}
+          className="w-6 aspect-square mx-2 hover:cursor-pointer"
+          onClick={changePlayMode}
+        />
+        <Icon className="w-6 aspect-square mx-2 hover:cursor-pointer" name="volume" />
         <Icon name="fold" />
       </div>
     </>

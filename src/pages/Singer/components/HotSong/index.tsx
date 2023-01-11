@@ -1,5 +1,5 @@
 import { singerTopSong } from '@service/singer'
-import { SongType } from '@type/api'
+import type { SongType } from '@type/common'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 

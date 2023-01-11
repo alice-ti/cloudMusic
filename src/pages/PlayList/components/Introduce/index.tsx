@@ -1,7 +1,7 @@
 import React from 'react'
 
+import Button from '@/components/Button'
 import Img from '@/components/Img'
-import Icon from '@/components/SvgIcon'
 import { PlaylistType } from '@/type/api'
 import { formatDate } from '@/utils/time'
 
@@ -27,10 +27,11 @@ const Introduce: React.FC<IntroduceType> = (props) => {
         </div>
         <div className="line-clamp-3 text-gray-600">{description}</div>
         <div>
-          <button className="flex justify-center items-center py-2 px-4 rounded-md bg-purple-200 text-purple-900 hover:scale-105 transition-all ease-linear">
-            <Icon name="play" className="mr-2 w-4 h-4" />
-            <span className="text-base font-bold">播放</span>
-          </button>
+          <Button
+            icon="play"
+            text="播放"
+            className="py-2 px-4 hover:scale-105 transition-all ease-linear"
+          />
         </div>
       </div>
     </header>

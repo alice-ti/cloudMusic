@@ -1,15 +1,20 @@
-// 轮播
+import type { AlbumType, ArtistType, MvType, SongType } from '@type/common'
+
 export declare interface BannerItemType {
   url: string
   imageUrl: string
   [name: string]: unknown
 }
-
-export interface BannerType {
+/**
+ * 轮播
+ */
+export interface BannerApiType {
   banners: BannerItemType[]
 }
 
-// 推荐歌曲
+/**
+ * 推荐歌曲
+ */
 export interface RecSongType {
   id: number
   name: string
@@ -18,12 +23,14 @@ export interface RecSongType {
 }
 
 // 推荐歌单
-export interface RecSongSheetType {
+export interface RecSongSheetApiType {
   result: RecSongType[]
 }
 
-// 歌单分类
-export interface PlaylistCateType {
+/**
+ * api 歌单分类
+ */
+export interface PlaylistCateApiType {
   categories: {
     [name: number]: string
   }
@@ -38,53 +45,19 @@ export interface PlaylistCateType {
   }>
 }
 
-// 推荐分类
 export interface ToplistType {
-  playlists: unknown[]
-  [name: string]: unknown
-}
-
-// base 专辑类型
-export interface AlbumType {
-  picUrl: string
-  name: string
-  type: string
   id: number
-  size: number
-  description: string
-  publishTime: number
-  [name: string]: unknown
-}
-
-// base Mv类型
-export interface MvType {
-  artistName: string
-  artist: SingerType
-  imgurl: string
-  imgurl16v9: number
+  coverImgUrl: string
   name: string
-  publishTime: string
-  status: number
   playCount: number
-  duration: number
-}
-
-// base 歌手类型
-export interface SingerType {
-  id: number
-  name: string
   [name: string]: unknown
 }
 
-// base 歌曲类型
-export interface SongType {
-  name: string
-  id: number
-  alia: string[]
-  // 歌曲时长
-  dt: number
-  al: AlbumType
-  ar: SingerType[]
+/**
+ * - api 推荐分类
+ */
+export interface ToplistApiType {
+  playlists: ToplistType[]
   [name: string]: unknown
 }
 
@@ -103,28 +76,36 @@ export interface PlaylistType {
   [name: string]: unknown
 }
 
-// 歌单详情
-export interface PlaylistDetailsType {
+/**
+ * api 歌单详情
+ */
+export interface PlaylistDetailsApiType {
   playlist: PlaylistType
   privileges: unknown[]
 }
 
-// api 所有歌曲
-export interface PlaylistAllType {
+/**
+ * api 所有歌曲
+ */
+export interface PlaylistAllApiType {
   privileges: SongType[]
   songs: SongType[]
   code: number
 }
 
-// 所有歌曲参数
+/**
+ * params 所有歌曲参数
+ */
 export interface PlaylistAllParamsType {
   id: number
   limit?: number
   offset?: number
 }
 
-// api 歌曲url params
-export interface SongUrlType {
+/**
+ * params 歌曲url
+ */
+export interface SongUrlParamsType {
   id: number
   level?: 'standard' | 'higher' | 'exhigh' | 'lossless'
 }
@@ -136,13 +117,18 @@ interface SongUrlItem {
   time: number // 歌曲时长
   [name: string]: unknown
 }
-// api 歌曲url response
-export interface SongUrlResponse {
+
+/**
+ * api 歌曲url
+ */
+export interface SongUrlApiType {
   data: SongUrlItem[]
 }
 
-// api recomm song
-export interface RecommSongType {
+/**
+ * api 推荐歌曲
+ */
+export interface RecommSongApiType {
   picUrl: string // 歌曲海报
   id: number // 歌曲id
   playCount: number
@@ -163,8 +149,10 @@ export interface RecomFMType {
   }>
 }
 
-// api 歌词
-export interface LyricType {
+/**
+ * api 歌词
+ */
+export interface LyricApiType {
   lrc: {
     lyric: string
     version: number
@@ -180,16 +168,7 @@ export interface SingerInfoType {
       backgroundUrl: string
       [name: string]: any
     }
-    artist: {
-      id: number
-      name: string
-      albumSize: number
-      musicSize: number
-      mvSize: number
-      identifyTag: string[]
-      briefDesc: string
-      [name: string]: any
-    }
+    artist: ArtistType
     videoCount: number
   }
   [name: string]: unknown
@@ -220,6 +199,15 @@ export interface SingerMvType {
   hasMore: boolean
 }
 
+/**
+ * api /singer/hot
+ */
+export interface SingerHotApiType {
+  code: number
+  more: boolean
+  artists: ArtistType[]
+}
+
 // api singer singer/sim
 // export interface SingerSimilarType { }
 
@@ -227,5 +215,12 @@ export interface SingerMvType {
 export interface AlbumDetailType {
   code: number
   album: AlbumType
+  songs: SongType[]
+}
+
+// api song song/detail
+export interface SongDetailApiType {
+  code: number
+  privileges: any[]
   songs: SongType[]
 }

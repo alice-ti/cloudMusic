@@ -1,6 +1,6 @@
 import Album from '@components/Album'
 import { singerAlbum, singerMv } from '@service/singer'
-import type { AlbumType, MvType } from '@type/api'
+import type { AlbumType, MvType } from '@type/common'
 import { formatDate } from '@utils/time'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
