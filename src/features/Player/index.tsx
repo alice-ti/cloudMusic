@@ -14,7 +14,13 @@ const Player: React.FC = (props) => {
 
   const isDraw = useRef<boolean>(false) // 拖动
   useEffect(() => {
-    // setInterval(() => console.log('===>', player.progress), 1000)
+    const inter = setInterval(() => {
+      const percent = ((player.progress * 1000) / player.currentTrack.dt) * 100
+      // console.log('===>', player.progress, percent)
+      if (!isDraw.current) setRate(percent)
+    }, 100)
+
+    return () => clearInterval(inter)
   }, [])
 
   // slider 进度条改变
@@ -38,6 +44,7 @@ const Player: React.FC = (props) => {
   const handleAfterChange = (val: number | number[]): void => {
     console.log(val)
     isDraw.current = false
+    player.progress = (((val as number) / 100) * player.currentTrack.dt) / 1000
     flushSync(() => setRate(val as number))
   }
 

@@ -4,35 +4,34 @@ import { useParams } from 'react-router-dom'
 
 import Img from '@/components/Img'
 import { singerDetail } from '@/service/singer'
+import type { ArtistType } from '@/type/common'
 
-interface IntroduceType {
-  id: number
-  name: string
-  albumSize: number
-  musicSize: number
-  mvSize: number
-  identifyTag: string[]
-  briefDesc: string
-  [name: string]: any
-}
+// interface IntroduceType {
+//   id: number
+//   name: string
+//   cover: string
+//   albumSize: number
+//   musicSize: number
+//   mvSize: number
+//   identifyTag: string[]
+//   briefDesc: string
+//   [name: string]: any
+// }
 
 const Introduce: React.FC = (props) => {
-  const [singerInfo, setSingerInfo] = useState<IntroduceType | null>(null)
+  const [singerInfo, setSingerInfo] = useState<ArtistType | null>(null)
   const [imgUrl, setImgUrl] = useState<string>('')
   const { id } = useParams()
   useEffect(() => {
     const init = async (): Promise<void> => {
       const {
         data: {
-          data: {
-            user: { avatarUrl },
-            artist,
-          },
+          data: { user, artist },
         },
       } = await singerDetail(Number(id))
 
       if (artist !== null) setSingerInfo(artist)
-      setImgUrl(avatarUrl)
+      setImgUrl(user?.avatarUrl ?? artist?.cover)
     }
     void init()
   }, [id])
@@ -44,7 +43,7 @@ const Introduce: React.FC = (props) => {
         <div className="pl-10 flex flex-col justify-between">
           <div className="text-4xl font-bold">{singerInfo?.name}</div>
           <div className="">
-            <div className="font-bold">{singerInfo?.identifyTag.join(',')}</div>
+            <div className="font-bold">{singerInfo?.identifyTag?.join(',')}</div>
             <div className="mt-2 text-sm w-fit text-gray-700 cursor-pointer">
               {singerInfo?.musicSize}首歌曲 · {singerInfo?.albumSize}张专辑 · {singerInfo?.mvSize}
               个MV

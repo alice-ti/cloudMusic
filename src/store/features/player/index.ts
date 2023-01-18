@@ -34,7 +34,7 @@ export const switchSongsAsync = createAsyncThunk(
   'player/switchSongs',
   async (params: SwitchSongsAsyncParamsType, { dispatch }) => {
     const { SongId, playlistId } = params
-    await player.replacePlaylist(playlistId)
+    await player.replacePlaylist('playlist', playlistId)
     await player._replaceCurrentTrack(SongId)
     dispatch(switchSongs())
   }
@@ -51,6 +51,7 @@ export const playerSlice = createSlice({
     switchPlayMode(state, action: PayloadAction<number>) {
       const { payload } = action
       state.playMode = payload
+      player.playMode = payload
     },
   },
   extraReducers: (builder) => {

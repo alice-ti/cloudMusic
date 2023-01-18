@@ -29,12 +29,12 @@ const PlayerInfo: React.FC = (props) => {
     <section className="w-1/4 flex flex-row">
       <Img
         src={songInfo?.al.picUrl}
-        className="w-14 rounded-md mr-4 select-none"
+        className="w-14 aspect-square rounded-md mr-4 select-none"
         onClick={() => navigate(`song`)}
       />
       <div className="flex flex-col justify-between select-none">
-        <div>{songInfo.name}</div>
-        <div className="mt-2">{formatSingerName(songInfo.ar)}</div>
+        <div className="line-clamp-1">{songInfo.name}</div>
+        <div className="line-clamp-1 mt-2">{formatSingerName(songInfo.ar)}</div>
       </div>
     </section>
   )

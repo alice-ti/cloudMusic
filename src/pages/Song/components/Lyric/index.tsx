@@ -25,16 +25,19 @@ const Lyric: React.FC = () => {
       update()
     }
     if (Song.id !== -1) void init()
+
+    return () => clearInterval(lyricInterval.current)
   }, [Song.id])
 
   useEffect(() => {}, [])
 
-  const scroll = (time: number): number => {
+  const scroll = (time: number, prev: number): number => {
     const currIndex = timeList.findIndex((ele, idx, _arr) => {
       const curr = Number(ele)
       const next = idx + 1 === _arr.length ? Infinity : Number(_arr[idx + 1])
       return curr <= time && next > time
     })
+    if (currIndex === prev) return currIndex
 
     currLine.current?.classList.remove('text-red-600')
     currLine.current = document.querySelector(`#line-${currIndex}`)
@@ -49,24 +52,21 @@ const Lyric: React.FC = () => {
   }
 
   const update = (): void => {
+    let prev = -1
     lyricInterval.current = setInterval(() => {
-      // console.log(player?._howler?.seek())
       const timev = player?.progress ?? 0
-      scroll(timev * 1000)
+      prev = scroll(timev * 1000, prev)
     }, 1000)
   }
 
   return (
-    <div className="h-screen">
-      <button onClick={() => (player.progress = 200)}>Btn</button>
+    <div className="h-full">
       <ul className="h-full">
-        {lyricList?.map((ele, idx) => {
-          return (
-            <li className="h-16 font-bold text-center" id={`line-${idx}`} key={idx}>
-              {ele}
-            </li>
-          )
-        })}
+        {lyricList?.map((ele, idx) => (
+          <li className="h-16 font-bold text-center" id={`line-${idx}`} key={idx}>
+            {ele}
+          </li>
+        ))}
       </ul>
       <div></div>
     </div>

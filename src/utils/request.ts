@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 
-const BASE_URL = ' http://127.0.0.1:4000/'
+const BASE_URL = '/api'
 
 interface OptionType {
   data?: unknown

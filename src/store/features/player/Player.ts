@@ -34,16 +34,18 @@ class Player {
   _personalFMNextLoading: boolean // 是否正在缓存私人FM的下一首歌曲
 
   // 播放信息
-  _list: SongType[] // 播放列表
+  /** 播放列表 */
+  _list: SongType[]
   /** 当前播放歌曲在播放列表里的index */
   _current: number
   /** 被随机打乱的播放列表，随机播放模式下会使用此播放列表 */
   _shuffledList: SongType[]
   /** 当前播放列表的信息 */
-  _playlistSource: unknown
+  _playlistSource: { type: string; id: number }
   /** 当前播放歌曲的详细信息 */
   _currentTrack: SongType
-  _playNextList: SongType[] // 当这个list不为空时，会优先播放这个list的歌
+  /** 当这个list不为空时，会优先播放这个list的歌 */
+  _playNextList: SongType[]
   _isPersonalFM: boolean // 是否是私人FM模式
   _personalFMTrack: { id: number } // 私人FM当前歌曲
   _personalFMNextTrack: { id: number } // 私人FM下一首歌曲信息（为了快速加载下一首）
@@ -75,7 +77,7 @@ class Player {
     this._list = [] // 当前播放列表
     this._current = 0 // 当前播放歌曲在播放列表里的index
     this._shuffledList = [] // 被随机打乱的播放列表，随机播放模式下会使用此播放列表
-    this._playlistSource = { type: 'album', id: 123 } // 当前播放列表的信息
+    this._playlistSource = { type: 'playlist', id: 123 } // 当前播放列表的信息
     this._playNextList = [] // 当这个list不为空时，会优先播放这个list的歌
     this._isPersonalFM = false // 是否是私人FM模式
     this._personalFMTrack = { id: 0 } // 私人FM当前歌曲
@@ -122,6 +124,13 @@ class Player {
     }
   }
 
+  /**
+   * @description 当前播放列表信息
+   */
+  get playlistSource(): { type: string; id: number } {
+    return this._playlistSource
+  }
+
   // seek(time = null): number {
   //   if (time !== null) {
   //     this._howler?.seek(time)
@@ -130,19 +139,15 @@ class Player {
   //   return this._howler === null ? 0 : this._howler.seek()
   // }
 
-  get list(): SongType[] {
+  get playNextList(): SongType[] {
     switch (this._playMode) {
       case 0:
-        return this._list
+        return this._playNextList
       case 2:
         return this.shuffledList
       default:
-        return []
+        return this._playNextList
     }
-  }
-
-  set list(list: SongType[]) {
-    this._list = list
   }
 
   /**
@@ -157,7 +162,7 @@ class Player {
    */
   get current(): number {
     // todo 返回当前index
-    return this.list.findIndex((ele) => ele.id === this.currentTrackID)
+    return this._list.findIndex((ele) => ele.id === this.currentTrackID)
   }
 
   /** 当前歌曲详细信息 */
@@ -284,8 +289,8 @@ class Player {
     if (this.playMode === 3) return [this._currentTrack.id]
 
     // 正常下一首歌曲
-    if (this._playNextList.length > this.current) {
-      TrackId = this._playNextList[this.current + 1].id
+    if (this.playNextList.length > this.current) {
+      TrackId = this.playNextList[this.current + 1].id
     }
 
     return [TrackId]
@@ -293,9 +298,12 @@ class Player {
 
   /**
    * @description 更换播放列表
+   * @param type 播放列表类型
+   * @param id id
    */
-  async replacePlaylist(id: number): Promise<void> {
-    await this.getAlbumById(id)
+  async replacePlaylist(type: string, id: number): Promise<void> {
+    await this.getPlaylistById(id)
+    this._playlistSource = { type, id }
     this._playNextList = this._list
     console.log('replacePlaylist')
     console.log(this._list, this._playNextList)
@@ -305,7 +313,7 @@ class Player {
    * @description 获取对应id专辑歌曲
    * @param id
    */
-  async getAlbumById(id: number): Promise<void> {
+  async getPlaylistById(id: number): Promise<void> {
     const {
       data: { songs },
     } = await getPlaylistAll({ id })

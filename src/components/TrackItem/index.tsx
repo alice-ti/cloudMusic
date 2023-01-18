@@ -32,6 +32,7 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
   const handleMouseLeave = (): void => setShowLike(false)
 
   const selectSong = (): void => {
+    // TODO 同一歌单内 歌曲点击处理
     void dispatch(switchSongsAsync({ SongId, playlistId }))
   }
 

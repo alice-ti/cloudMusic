@@ -33,7 +33,7 @@ const SongItem: React.FC<SongItemPropsType> = (props) => {
             showLike ? '' : 'hidden'
           }`}
         >
-          <Icon name="play" />
+          <Icon name="play" className="w-4 aspect-square" />
         </div>
         <div className="flex-1 ml-4 font-bold line-clamp-1 cursor-pointer">
           {name}

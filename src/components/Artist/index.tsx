@@ -33,7 +33,9 @@ const Artist: React.FC<ArtistPropType> = (props: ArtistPropType) => {
             <ButtonPlay className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2" />
           )}
         </div>
-        <div className="mt-4 cursor-pointer hover:underline">{info.name}</div>
+        <div className="mt-4 cursor-pointer hover:underline" onClick={() => goArtist(info.id)}>
+          {info.name}
+        </div>
       </div>
     </>
   )

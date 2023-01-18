@@ -60,6 +60,7 @@ export interface MvType {
 export interface ArtistType {
   id: number
   name: string
+  cover: string
   albumSize: number
   musicSize: number
   mvSize: number

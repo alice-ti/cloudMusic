@@ -3,7 +3,7 @@ import { singerAlbum, singerMv } from '@service/singer'
 import type { AlbumType, MvType } from '@type/common'
 import { formatDate } from '@utils/time'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import HotSong from './components/HotSong'
 import Introduce from './components/Introduce'
@@ -12,6 +12,7 @@ import Latest from './components/Latest'
 const Singer: React.FC = () => {
   const [albumList, setAlbumList] = useState<AlbumType[]>([])
   const [MvList, setMvList] = useState<MvType[]>([])
+  const navigate = useNavigate()
   const { id } = useParams()
   useEffect(() => {
     const singerId = Number(id)
@@ -33,7 +34,7 @@ const Singer: React.FC = () => {
   }, [id])
 
   return (
-    <main className="flex-1 overflow-y-auto px-8 box-border">
+    <main className="xl:px-30 flex-1 overflow-y-auto px-20 box-border">
       <Introduce />
 
       <Latest album={albumList[0]} mv={MvList[0]} />
@@ -45,7 +46,7 @@ const Singer: React.FC = () => {
       <div className="text-gray-200 grid gap-x-8 gap-y-8 grid-cols-5 grid-rows-2">
         {albumList?.slice(1, 11).map((ele, idx) => (
           <div className="" key={idx}>
-            <Album src={ele.picUrl} albumClick={() => {}} />
+            <Album src={ele.picUrl} albumClick={() => navigate(`/album/${ele?.id}`)} />
             <div className="mt-2 line-clamp-2 text-gray-700 text-md">{ele.name}</div>
             <div className="text-gray-500 text-xs">{formatDate(ele.publishTime)}</div>
           </div>
