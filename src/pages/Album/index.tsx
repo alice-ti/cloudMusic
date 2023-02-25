@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import SongItem from '@/components/SongItem'
-import { albumDetail } from '@/service/album'
+import { albumInfo as albumDetail } from '@/service/album'
 
 import Introduce from './components/Introduce'
 
@@ -12,6 +12,7 @@ const Album: React.FC = () => {
   const [albumInfo, setAlbumInfo] = useState<AlbumType | null>(null)
   const [songList, setSongList] = useState<SongType[]>([])
   const { id } = useParams()
+
   useEffect(() => {
     const init = async (): Promise<void> => {
       const albumId = Number(id)
@@ -24,14 +25,15 @@ const Album: React.FC = () => {
     }
     void init()
   }, [])
+
   return (
     <main className="flex-1 overflow-y-auto px-10 box-border">
       {albumInfo !== null && <Introduce {...albumInfo} />}
       {songList?.map((ele, idx) => (
-        <SongItem song={ele} idx={idx + 1} key={idx} />
+        <SongItem song={ele} idx={idx + 1} key={idx} listId={Number(id)} />
       ))}
 
-      <section className="mt-4 text-gray-400 text-sm">
+      <section className="my-4 text-gray-400 text-sm">
         <hr />
         <div className="mt-6">发行于 · {formatDate(albumInfo?.publishTime ?? '')}</div>
         <div>&copy;{albumInfo?.company}</div>

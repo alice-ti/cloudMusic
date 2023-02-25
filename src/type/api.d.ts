@@ -126,14 +126,19 @@ export interface SongUrlApiType {
 }
 
 /**
- * api 推荐歌曲
+ * api recommend/songs  推荐歌曲
  */
 export interface RecommSongApiType {
-  picUrl: string // 歌曲海报
-  id: number // 歌曲id
-  playCount: number
-  trackCount: number
-  trackNumberUpdateTime: number
+  data: {
+    dailySongs: SongType[]
+    recommendReasons: Array<{
+      reason: string
+      reasonId: string
+      songId: number
+      targetUrl: string
+    }>
+    orderSongs: []
+  }
   [name: string]: unknown
 }
 
@@ -212,7 +217,7 @@ export interface SingerHotApiType {
 // export interface SingerSimilarType { }
 
 // api album
-export interface AlbumDetailType {
+export interface AlbumInfoType {
   code: number
   album: AlbumType
   songs: SongType[]

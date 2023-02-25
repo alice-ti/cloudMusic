@@ -17,7 +17,7 @@ const Album: React.FC<AlbumPropsType> = (props) => {
   return (
     <div
       className={
-        'flex justify-center items-center rounded-xl bg-slate-600 aspect-square hover:drop-shadow-xl ' +
+        'flex justify-center items-center rounded-lg bg-slate-600 aspect-square shadow-sm hover:drop-shadow-xl ' +
         className
       }
       style={{ backgroundImage: `url(${src})`, backgroundSize: '100%' }}

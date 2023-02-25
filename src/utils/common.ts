@@ -1,4 +1,4 @@
-import type { SingerType } from '@type/common'
+import type { SingerType, SongType } from '@type/common'
 import ColorThief from 'colorthief'
 
 /**
@@ -36,5 +36,65 @@ export const getColor = async (
 
       resolve([primaryColor, paletteColor])
     }
+  })
+}
+
+/**
+ * @description 歌曲是否可以播放
+ * - 0: 免费或无版权
+ * - 1: VIP 歌曲
+ * - 4: 购买专辑
+ * - 8: 非会员可免费播放低音质，会员可播放高音质及下载
+ * - fee 为 1 或 8 的歌曲均可单独购买 2 元单曲
+ * @param track
+ * @returns
+ */
+export const isCanPlayTrack = (track: SongType): { playable: boolean; reason: string } => {
+  const result = {
+    playable: true,
+    reason: '',
+  }
+
+  if (Number(track?.privilege?.pl) > 0) return result
+
+  const fee = track?.fee !== undefined ? track?.fee : track.privilege?.fee
+  const st = track?.st
+  const noCR = track?.noCopyrightRcmd
+
+  if (fee === 1) {
+    // TODO VIP 账户判断
+    result.playable = false
+  } else if (fee === 4) {
+    result.playable = false
+    result.reason = '付费专辑'
+  } else if (![null, undefined].includes(noCR)) {
+    result.playable = false
+    result.reason = '无版权'
+  } else if (st < 0) {
+    // TODO 账户登出
+    result.playable = false
+    result.reason = '已下架'
+  }
+
+  return result
+}
+
+/**
+ * @description 添加playable
+ * @param tracks
+ * @param privileges
+ * @returns
+ */
+export const addPlayableToTrack = (tracks: SongType[], privileges: any[]): SingerType[] => {
+  if (tracks?.length === undefined) return tracks
+  return tracks.map((track) => {
+    const privilege = privileges.find((item) => item.id === track.id) ?? {}
+    if (track.privilege !== undefined) Object.assign(track.privilege, privilege)
+    else track.privilege = privilege
+
+    const result = isCanPlayTrack(track)
+    track.playable = result.playable
+    track.reason = result.reason
+    return track
   })
 }

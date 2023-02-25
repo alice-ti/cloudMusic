@@ -1,5 +1,5 @@
 import Img from '@components/Img'
-import type { AlbumType } from '@type/api'
+import type { AlbumType } from '@type/common'
 
 const Introduce: React.FC<AlbumType> = (props: AlbumType) => {
   const { picUrl, name, description } = props

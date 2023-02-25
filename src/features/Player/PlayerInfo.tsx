@@ -1,7 +1,7 @@
 import Img from '@components/Img'
+import FormatSingerName from '@features/FormatSingerName'
 import { switchSongs } from '@store/features/player'
 import type { AppDispatch, RootState } from '@store/index'
-import { formatSingerName } from '@utils/common'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -15,6 +15,7 @@ const PlayerInfo: React.FC = (props) => {
   const [id, setId] = useState<number>(songInfo.id)
 
   useEffect(() => {
+    console.log(111)
     events.subscribe('track', (id: number) => {
       console.log('sub', id)
       setId(id)
@@ -34,7 +35,9 @@ const PlayerInfo: React.FC = (props) => {
       />
       <div className="flex flex-col justify-between select-none">
         <div className="line-clamp-1">{songInfo.name}</div>
-        <div className="line-clamp-1 mt-2">{formatSingerName(songInfo.ar)}</div>
+        <div className="line-clamp-1 mt-2">
+          <FormatSingerName ar={songInfo.ar} />
+        </div>
       </div>
     </section>
   )

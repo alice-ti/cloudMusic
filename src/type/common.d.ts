@@ -8,6 +8,11 @@ export interface SingerType {
 /**
  * base 歌曲类型
  */
+// 0: 免费或无版权
+// 1: VIP 歌曲
+// 4: 购买专辑
+// 8: 非会员可免费播放低音质，会员可播放高音质及下载
+// fee 为 1 或 8 的歌曲均可单独购买 2 元单曲
 export interface SongType {
   name: string
   id: number
@@ -19,6 +24,14 @@ export interface SongType {
     picUrl: string
     [name: string]: unknown
   } // 专辑信息
+  fee?: 0 | 1 | 4 | 8
+  privilege: {
+    pl: number
+    fee: 0 | 1 | 4 | 8
+    [name: string]: unknown
+  } // 是否特权
+  st: number // 是否下架 小于 0 为已下架
+  noCopyrightRcmd: any // 版权 非空为无版权
   ar: SingerType[] // 歌手
   [name: string]: unknown
 }

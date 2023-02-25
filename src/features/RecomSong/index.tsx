@@ -1,6 +1,6 @@
 import Img from '@components/Img'
 import { dailyRecommendTracks } from '@service/song'
-import type { RecommSongApiType } from '@type/api'
+import type { SongType } from '@type/common'
 import sample from 'lodash/sample'
 import { useEffect, useState } from 'react'
 
@@ -15,11 +15,14 @@ const RecomSong: React.FC = () => {
 
   useEffect(() => {
     const getSong = async (): Promise<void> => {
-      const { data } = await dailyRecommendTracks()
-      const recomm = sample<RecommSongApiType[] | string[]>(
-        (data as any)?.msg !== null ? data : defaultCovers ?? defaultCovers
+      const {
+        data: { data },
+      } = await dailyRecommendTracks()
+      console.log(data)
+      const recomm = sample<SongType[] | string[]>(
+        (data as any)?.msg !== null ? data?.dailySongs : defaultCovers ?? defaultCovers
       )
-      const src = typeof recomm === 'string' ? recomm : (recomm as RecommSongApiType)?.picUrl
+      const src = typeof recomm === 'string' ? recomm : (recomm as SongType)?.al?.picUrl
       setCover(src)
     }
     void getSong()

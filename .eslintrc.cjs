@@ -20,5 +20,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'warn',
     '@typescript-eslint/no-floating-promises': 'warn',
     'react/display-name': 'off',
+    complexity: ['error', 15],
   },
 }

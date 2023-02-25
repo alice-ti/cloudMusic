@@ -10,6 +10,7 @@ const Mine = lazy(async () => await import('@pages/Mine'))
 const Find = lazy(async () => await import('@pages/Find'))
 const Song = lazy(async () => await import('@pages/Song'))
 const Album = lazy(async () => await import('@pages/Album'))
+const Login = lazy(async () => await import('@pages/Login'))
 const Singer = lazy(async () => await import('@pages/Singer'))
 const PlayList = lazy(async () => await import('@pages/PlayList'))
 
@@ -36,6 +37,7 @@ const routes: RouteType[] = [
       { path: '/singer/:id', element: <Singer />, meta: { title: 'Singer' } },
       { path: '/playlist/:id', element: <PlayList />, meta: { title: 'SongSheet' } },
       { path: '/song', element: <Song />, meta: { title: 'Song' } },
+      { path: '/login', element: <Login />, meta: { title: 'Login' } },
     ],
   },
 

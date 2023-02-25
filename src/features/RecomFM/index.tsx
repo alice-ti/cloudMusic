@@ -1,9 +1,9 @@
 import Img from '@components/Img'
 import Icon from '@components/SvgIcon'
+import FormatSingerName from '@features/FormatSingerName'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '@/store'
-import { formatSingerName } from '@/utils/common'
 // import { personalFM } from '@service/person'
 
 const RecommFM: React.FC = () => {
@@ -23,7 +23,7 @@ const RecommFM: React.FC = () => {
         <div className="ml-4 flex flex-col justify-between">
           <div className="font-bold text-2xl text-white">{songInfo.name}</div>
           <div className="mb-8 text-white font-bold hover:underline cursor-pointer">
-            {formatSingerName(songInfo.ar)}
+            <FormatSingerName ar={songInfo?.ar} />
           </div>
           <div className="flex flex-row items-center">
             <Icon

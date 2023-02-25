@@ -1,6 +1,8 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
 
+// import { getCookies } from '@/utils/auth'
+
 const BASE_URL = '/api'
 
 interface OptionType {
@@ -13,6 +15,7 @@ interface OptionType {
 // 请求拦截
 axios.interceptors.request.use(
   (config) => {
+    // if (false) config.params.cookie = `MUSIC_A=${getCookie('MUSIC_A')};`
     return config
   },
   async (error) => {
@@ -48,6 +51,7 @@ const request = async <T>(
     url,
     method,
     baseURL: BASE_URL,
+    withCredentials: true,
     ...params,
   }
 

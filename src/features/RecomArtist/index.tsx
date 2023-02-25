@@ -1,3 +1,4 @@
+import { sampleSize } from 'lodash'
 import { useEffect, useState } from 'react'
 
 import Artist from '@/components/Artist'
@@ -16,7 +17,7 @@ const RecomArtist: React.FC = (props) => {
   }, [])
   return (
     <section className="my-10 grid grid-cols-6 grid-rows-2 gap-y-8 justify-items-center">
-      {artistList?.slice(0, 12).map((ele, idx) => (
+      {sampleSize(artistList, 12).map((ele, idx) => (
         <Artist info={ele} key={idx} />
       ))}
     </section>

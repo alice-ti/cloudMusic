@@ -25,13 +25,19 @@ const LayouContent: React.FC = () => {
 
   return (
     <>
-      <main className="flex-1 overflow-y-auto px-10 box-border">
-        {/* <SwiperCard swiperList={swiperList} /> */}
-        {/* <RecomSongSheet /> */}
+      <main className="lg:px-20 flex-1 overflow-y-auto px-10 box-border">
+        {/* <SwiperCard swiperList={swiperList} className="!w-1/2 mt-12" /> */}
+
+        <p className="text-3xl font-bold mb-6 mt-12">推荐歌单</p>
+        <RecomSongSheet />
+
+        <p className="text-3xl font-bold mb-6 mt-10">FOR</p>
         <section className="grid grid-cols-2 gap-x-10">
           <RecomSong />
           <RecommFM />
         </section>
+
+        <p className="text-3xl font-bold mb-8 mt-10">推荐歌手</p>
         <RecomArtist />
       </main>
     </>

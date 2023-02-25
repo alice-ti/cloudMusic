@@ -5,6 +5,7 @@ import { Howl, Howler } from 'howler'
 import _ from 'lodash'
 
 import { events } from '@/application/Pubsub'
+import { albumInfo } from '@/service/album'
 
 /**
  * @readonly
@@ -302,7 +303,9 @@ class Player {
    * @param id id
    */
   async replacePlaylist(type: string, id: number): Promise<void> {
-    await this.getPlaylistById(id)
+    if (id === this._playlistSource.id) return // 同一歌单/专辑不重复获取
+    if (type === 'playlist') await this.getPlaylistById(id)
+    if (type === 'album') await this.getAlbumListById(id)
     this._playlistSource = { type, id }
     this._playNextList = this._list
     console.log('replacePlaylist')
@@ -317,6 +320,20 @@ class Player {
     const {
       data: { songs },
     } = await getPlaylistAll({ id })
+
+    this._list = songs
+  }
+
+  /**
+   * @description 获取专辑歌曲
+   * @param id
+   */
+  async getAlbumListById(id: number): Promise<void> {
+    const {
+      data: { songs },
+    } = await albumInfo(id)
+
+    console.log(songs)
 
     this._list = songs
   }

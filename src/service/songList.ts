@@ -83,4 +83,14 @@ export const getPlaylistAll = async (
       limit,
     },
   })
+  // TODO 对获取数据二次处理，添加版权相关信息 addPlayableToTrack
+}
+
+/**
+ * @description 获取每日推荐歌单
+ * - 说明 : 调用此接口 , 可获得每日推荐歌单 ( 需要登录 )
+ * @returns
+ */
+export const recommendSongList = async (): Promise<AxiosResponse<any>> => {
+  return await request('/recommend/resource', 'GET')
 }

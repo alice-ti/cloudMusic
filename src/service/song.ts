@@ -46,8 +46,8 @@ export const SongDetail = async (params: {
  * - 说明 : 调用此接口 , 可获得每日推荐歌曲 ( 需要登录 )
  * @returns
  */
-export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongApiType[]>> => {
-  return await request<RecommSongApiType[]>('/recommend/songs', 'GET', {
+export const dailyRecommendTracks = async (): Promise<AxiosResponse<RecommSongApiType>> => {
+  return await request<RecommSongApiType>('/recommend/songs', 'GET', {
     data: {
       timestamp: Date.now(),
     },
