@@ -1,6 +1,6 @@
 import type { QRCodeToStringOptionsOther } from 'qrcode'
 import QRcode from 'qrcode'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { loginQrCodeCheck, loginQrCodeKey } from '@/service/auth'
@@ -26,16 +26,17 @@ const codeTxt: { [name: number]: string } = {
 const Login: React.FC = () => {
   const [qrcode, setQrcode] = useState<string>('')
   const [qrState, setQrState] = useState<number>(0)
-
   const navigate = useNavigate()
 
-  let code = '' // unikey
+  const unicode = useRef<string>('') // unikey
+  let interCount: NodeJS.Timer
 
   useEffect(() => {
     const fetch = async (): Promise<void> => {
       await getKey()
-      await checkLogin(code)
+      if (interCount === undefined) await checkLogin()
     }
+
     void fetch()
     return () => clearInterval(interCount)
   }, [])
@@ -49,28 +50,25 @@ const Login: React.FC = () => {
     } = await loginQrCodeKey()
     const { unikey } = data
 
-    code = unikey
+    unicode.current = unikey
     const svg = await QRcode.toString(`https://music.163.com/login?codekey=${unikey}`, Sop)
     setQrcode(svg)
 
     /* 等同于上面 `https://music.163.com/login?codekey=${unikey}`
-    const {
-      data: { qrurl },
-    } = await loginQrCodeCreate({ key: unikey })
+    const { data: { qrurl } } = await loginQrCodeCreate({ key: unikey })
     */
   }
 
-  let interCount: NodeJS.Timer
   /**
    * @description 轮询扫码状态
    * - 800为二维码过期
    * - 801为等待扫码
    * - 802为待确认,
    * - 803为授权登录成功(803状态码下会返回cookies)
-   * @param key
    */
-  const checkLogin = async (key: string): Promise<void> => {
+  const checkLogin = async (): Promise<void> => {
     interCount = setInterval(() => {
+      const key = unicode.current
       const poll = async (): Promise<void> => {
         const {
           data: { code, cookie },
@@ -79,9 +77,10 @@ const Login: React.FC = () => {
 
         const _800 = (): void => {
           void getKey()
+          setQrState(1)
         }
         const _801 = (): void => {
-          setQrState(1)
+          setQrState(0)
         }
         const _802 = (): void => {
           setQrState(2)
@@ -113,7 +112,7 @@ const Login: React.FC = () => {
       <main className="flex-1">
         <section className="flex flex-col justify-center pt-10">
           <img className="h-60" src={`data:image/svg+xml;utf8,${encodeURIComponent(qrcode)}`} />
-          <div>{codeTxt[qrState]}</div>
+          <div className="text-center">{codeTxt[qrState]}</div>
         </section>
       </main>
     </>

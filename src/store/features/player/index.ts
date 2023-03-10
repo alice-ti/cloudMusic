@@ -4,7 +4,7 @@ import player from '@/application/player'
 import type { SongType } from '@/type/common'
 
 interface PlayerStateType {
-  songInfo: SongType
+  songInfo: SongType | null
   playMode: number
 }
 
@@ -16,18 +16,7 @@ interface SwitchSongsAsyncParamsType {
 }
 
 const initialState: PlayerStateType = {
-  songInfo: {
-    name: '',
-    id: -1,
-    alia: [],
-    dt: 0,
-    ar: [{ id: -1, name: '' }],
-    al: {
-      picUrl: '',
-      name: '',
-      id: -1,
-    },
-  }, // 当前歌曲播放信息
+  songInfo: null, // 当前歌曲播放信息
   playMode: 0, // 当前播放模式
 }
 

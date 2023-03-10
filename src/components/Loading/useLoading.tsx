@@ -10,7 +10,7 @@ interface LoadingType {
 interface TimeType {
   startTime: number
   endTime: number
-  timer: number | null
+  timer: NodeJS.Timer | null
 }
 
 const _render = (_dom: HTMLElement, callback: () => void): void => {

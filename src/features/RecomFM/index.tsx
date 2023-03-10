@@ -19,9 +19,9 @@ const RecommFM: React.FC = () => {
   return (
     <>
       <div className="w-full aspect-[3/1] p-4 bg-gray-300 rounded-2xl flex flex-row">
-        <Img className="h-full aspect-square rounded-xl" src={songInfo.al.picUrl} />
+        <Img className="h-full aspect-square rounded-xl" src={songInfo?.al.picUrl ?? ''} />
         <div className="ml-4 flex flex-col justify-between">
-          <div className="font-bold text-2xl text-white">{songInfo.name}</div>
+          <div className="font-bold text-2xl text-white">{songInfo?.name}</div>
           <div className="mb-8 text-white font-bold hover:underline cursor-pointer">
             <FormatSingerName ar={songInfo?.ar} />
           </div>

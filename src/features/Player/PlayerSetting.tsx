@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Icon from '@/components/SvgIcon'
@@ -37,4 +38,4 @@ const PlayerSetting: React.FC = () => {
   )
 }
 
-export default PlayerSetting
+export default memo(PlayerSetting)

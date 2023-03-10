@@ -68,7 +68,7 @@ const Find: React.FC = () => {
   }, [])
 
   return (
-    <div className="xl:px-30 px-20 pt-20 box-border">
+    <div className="flex-1 overflow-y-auto xl:px-30 px-20 pt-20 box-border">
       <header className="mb-6 flex flex-row">
         {cate.length > 0 &&
           cate.map((ele, idx, _arr) => (

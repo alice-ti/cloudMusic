@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import player from '@/application/player'
 import Icon from '@/components/SvgIcon'
@@ -29,4 +29,4 @@ const PlaryerControl: React.FC<PlayerControlProps> = (props) => {
   )
 }
 
-export default PlaryerControl
+export default memo(PlaryerControl)

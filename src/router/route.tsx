@@ -1,6 +1,6 @@
 import type { RouteType } from '@type/route'
 import React, { lazy } from 'react'
-import { Outlet, RouteObject, useRoutes } from 'react-router-dom'
+import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
 import LayoutFooter from '@/features/LayoutFooter'
 import LayoutHeader from '@/features/LayoutHeader'
@@ -32,19 +32,20 @@ const routes: RouteType[] = [
     // element: <Navigate to="/index" />,
     element: <BaseLayout />,
     children: [
+      { path: '/', element: <Navigate to="/index" /> },
       { path: '/index', element: <Home />, meta: { title: 'Index' } },
       { path: '/album/:id', element: <Album />, meta: { title: 'Album' } },
       { path: '/singer/:id', element: <Singer />, meta: { title: 'Singer' } },
       { path: '/playlist/:id', element: <PlayList />, meta: { title: 'SongSheet' } },
       { path: '/song', element: <Song />, meta: { title: 'Song' } },
       { path: '/login', element: <Login />, meta: { title: 'Login' } },
+      { path: '/find', element: <Find />, meta: { title: 'Find' } },
     ],
   },
 
-  { path: '/find', element: <Find />, meta: { title: 'Find' } },
   { path: '/mine', element: <Mine />, meta: { title: 'Mine' } },
 ]
 
-const Route = (): React.ReactElement | null => useRoutes(routes as RouteObject[])
+const Route = (): React.ReactElement | null => useRoutes(routes)
 
 export default Route

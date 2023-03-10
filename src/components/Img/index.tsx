@@ -1,5 +1,5 @@
 import EmptyImage from '@assets/image/empty.png'
-import React, { HTMLAttributes, useCallback, useEffect, useState } from 'react'
+import React, { HTMLAttributes, memo, useCallback, useEffect, useState } from 'react'
 
 interface ImagePropsType extends HTMLAttributes<HTMLImageElement> {
   src: string // 真实图片
@@ -39,4 +39,4 @@ const Img: React.FC<ImagePropsType> = (props) => {
   )
 }
 
-export default Img
+export default memo(Img)

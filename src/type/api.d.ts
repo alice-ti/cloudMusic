@@ -229,3 +229,37 @@ export interface SongDetailApiType {
   privileges: any[]
   songs: SongType[]
 }
+
+/**
+ * api /user/account
+ */
+export interface UserAccountApiType {
+  code: number
+  account: {
+    anonimousUser: boolean // 匿名用户
+    createTime: number
+    id: number
+    status: number
+    type: number
+    userName: string
+    vipType: number
+    whitelistAuthority: number
+  }
+  profile: AccountProfile
+}
+
+export interface AccountProfile {
+  userId: number
+  userName: string
+  vipType: number
+  province: number // 省份
+  city: number // 城市
+  avatarUrl: string
+  avatarImgId: number
+  backgroundUrl: string
+  backgroundImgId: number
+  nickname: string
+  gender: number // 性别
+  lastLoginIP: string
+  lastLoginTime: number
+}

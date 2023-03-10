@@ -7,9 +7,8 @@ export const setCookies = (string: string): void => {
   cookies.forEach((cookie) => {
     document.cookie = cookie
     const cookieKeyValue = cookie.split(';')[0].split('=')
-    if (cookieKeyValue[1] === '') {
-      localStorage.setItem(`cookie-${cookieKeyValue[0]}`, cookieKeyValue[1])
-    }
+    console.log('====', string, cookie, cookieKeyValue)
+    localStorage.setItem(`cookie-${cookieKeyValue[0]}`, cookieKeyValue[1])
   })
 }
 

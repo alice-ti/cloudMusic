@@ -2,6 +2,7 @@ import type { SingerType, SongType } from '@type/common'
 import ColorThief from 'colorthief'
 
 /**
+ * @deprecated since Pull out components
  * @description 格式化歌手数据
  * @param arr
  * @returns

@@ -1,12 +1,25 @@
-import React, { HTMLAttributes } from 'react'
+import React, { HTMLAttributes, useEffect, useState } from 'react'
+
+import { getColor } from '@/utils/common'
 
 interface CoverType extends HTMLAttributes<HTMLImageElement> {
   src: string
 }
 
 const Cover: React.FC<CoverType> = (props) => {
-  const { className = '' } = props
-  const { src = '' } = props
+  const { className = '', src = '' } = props
+  const [pattle, setPattle] = useState<Array<[number, number, number]>>()
+
+  useEffect(() => {
+    const init = async (): Promise<void> => {
+      const [, list] = await getColor(src, 3)
+      setPattle(list)
+    }
+
+    void init()
+    console.log('cover', pattle)
+  }, [src])
+
   return (
     <>
       <img src={src} className={'rounded-2xl shadow-xl hover:shadow-2xl ' + className} />

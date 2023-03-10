@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useState } from 'react'
+import React, { HTMLAttributes, memo, useState } from 'react'
 
 import ButtonPlay from '@/components/ButtonPlay'
 
@@ -12,8 +12,10 @@ interface AlbumPropsType extends HTMLAttributes<HTMLElement> {
 const Album: React.FC<AlbumPropsType> = (props) => {
   const { src, albumClick, className = '' } = props
   const [showBtn, setShowBtn] = useState<boolean>(false)
+
   const handleEnter = (): void => setShowBtn(true)
   const handleLeave = (): void => setShowBtn(false)
+
   return (
     <div
       className={
@@ -29,4 +31,5 @@ const Album: React.FC<AlbumPropsType> = (props) => {
     </div>
   )
 }
-export default Album
+
+export default memo(Album)

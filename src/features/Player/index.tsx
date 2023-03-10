@@ -1,5 +1,5 @@
 import Slider from '@components/Slider'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 
 import player from '@/application/player'
@@ -37,10 +37,10 @@ const Player: React.FC = (props) => {
     console.log('暂停播放')
     player.pause()
   }
-  const togglePlay = (): void => {
+  const togglePlay = useCallback((): void => {
     setIsPlay(player.playing)
     player.playing ? handlePause() : handlePlay()
-  }
+  }, [])
   const handleAfterChange = (val: number | number[]): void => {
     console.log(val)
     isDraw.current = false

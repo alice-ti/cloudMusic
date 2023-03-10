@@ -10,7 +10,7 @@ const Lyric: React.FC = () => {
   const [lyricList, setLyricList] = useState<string[]>([])
   const Song = useSelector((state: RootState) => state.player.songInfo)
 
-  const lyricInterval = useRef(0)
+  const lyricInterval = useRef<NodeJS.Timer>()
   const currLine = useRef<HTMLElement | null>(null)
 
   let timeList: unknown[] = []
