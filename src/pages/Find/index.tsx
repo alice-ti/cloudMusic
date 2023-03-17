@@ -1,38 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { Reducer, useEffect, useReducer, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Playlist from '@/features/PlayList'
 import { playlistCatlist, topPlaylist } from '@/service/songList'
 import type { ToplistType } from '@/type/api'
 
-import CateBtn from './components/CateBtn'
 import CateCascade from './components/CateCascade'
+import Poster from './components/Poster'
 
-// 格式化二级分类
-const formatSub = (list: Array<{ category: number; [name: string]: any }>): any => {
-  const obj: {
-    [name: string]: any
-  } = {}
-  list.forEach((ele) => {
-    const key = ele.category.toString()
-    if (typeof obj[key] === 'undefined') {
-      obj[key] = []
-      obj[key].push(ele)
-    } else obj[key].push(ele)
-  })
-  return obj
+export interface CateType {
+  category: number
+  name: string
+  hot: boolean
+  [name: string]: unknown
+}
+
+export interface ClassifyType {
+  cate: {
+    [name: string]: string
+  }
+  sub: CateType[]
+}
+
+const reducerAction: Reducer<ClassifyType, ClassifyType> = (state, action) => {
+  return action
 }
 
 // 发现-歌单
 const Find: React.FC = () => {
   const navigate = useNavigate()
-  const [isShowSub, setIsShowSub] = useState<boolean>(false) // 是否展示二级分类
-  const [cate, setCate] = useState<string[]>([]) // 一级分类
-  const [subCate, setSubCate] = useState<any[]>([]) // 二级分类
   const [sheetlist, setSheetlist] = useState<ToplistType[]>([])
-
-  // 展示二级分类
-  const handleSubToggle = (): void => setIsShowSub(!isShowSub)
+  const [cate, dispatch] = useReducer(reducerAction, { sub: [], cate: {} })
+  const [tag, setTag] = useState<string>('') // 当前选择分类
 
   // 获取分类歌单
   const getTopSheet = async (params: { cat: string }): Promise<void> => {
@@ -43,8 +42,9 @@ const Find: React.FC = () => {
   }
 
   // 切换歌单
-  const changeSheet = (params: { cat: string }): void => {
+  const changeTag = (params: { cat: string }): void => {
     console.log(params)
+    setTag(params.cat)
     void getTopSheet(params)
   }
 
@@ -57,11 +57,7 @@ const Find: React.FC = () => {
         data: { categories, sub },
       } = await playlistCatlist()
 
-      const cateList = Object.values(categories)
-      cateList.push('...')
-      setCate(cateList)
-
-      setSubCate(formatSub(sub))
+      dispatch({ sub, cate: categories })
     }
     void init()
     void getTopSheet({ cat: '全部' })
@@ -69,23 +65,9 @@ const Find: React.FC = () => {
 
   return (
     <div className="flex-1 overflow-y-auto xl:px-30 px-20 pt-20 box-border">
-      <header className="mb-6 flex flex-row">
-        {cate.length > 0 &&
-          cate.map((ele, idx, _arr) => (
-            <CateBtn
-              text={ele}
-              active={idx === _arr.length - 1 ? isShowSub : false}
-              subToggle={idx === _arr.length - 1 ? handleSubToggle : () => {}}
-              key={idx}
-            />
-          ))}
-      </header>
-      <CateCascade
-        subCateList={subCate}
-        cateList={cate}
-        updateSheet={changeSheet}
-        isShow={isShowSub}
-      />
+      <Poster cat={tag} />
+
+      <CateCascade tag={tag} cate={cate} onUpdateTag={changeTag} />
       <Playlist list={sheetlist} playDetail={(e) => goPlaylist(e)} />
     </div>
   )

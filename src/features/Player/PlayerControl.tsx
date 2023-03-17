@@ -11,19 +11,33 @@ interface PlayerControlProps {
 const PlaryerControl: React.FC<PlayerControlProps> = (props) => {
   const { isPlay, togglePlay } = props
   const nextTrack = (): void => {
-    player._playNextTrack()
+    player.playNextTrack()
     console.log('next')
   }
+
+  const prevTrack = (): void => {
+    player.playPrevTrack()
+    console.log('prev')
+  }
+
   return (
     <>
       <div className="flex-1 flex flex-row justify-center items-center">
-        <Icon name="previous" className="cursor-pointer w-6 aspect-square" />
+        <Icon
+          name="previous"
+          className="p-1 box-content rounded-md cursor-pointer w-6 aspect-square hover:bg-gray-200/70"
+          onClick={prevTrack}
+        />
         <Icon
           name={isPlay ? 'play' : 'pause'}
-          className="mx-4 cursor-pointer w-8 aspect-square"
+          className="p-1 box-content rounded-md mx-4 cursor-pointer w-8 aspect-square hover:bg-gray-200/70"
           onClick={togglePlay}
         />
-        <Icon name="next" className="cursor-pointer w-6 aspect-square" onClick={nextTrack} />
+        <Icon
+          name="next"
+          className="p-1 box-content rounded-md cursor-pointer w-6 aspect-square hover:bg-gray-200/70"
+          onClick={nextTrack}
+        />
       </div>
     </>
   )

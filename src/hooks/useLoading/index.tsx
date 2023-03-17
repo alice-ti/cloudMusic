@@ -1,7 +1,6 @@
+import Loading from '@components/Loading'
 import React, { useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
-
-import Loading from './index'
 
 interface LoadingType {
   show: () => void

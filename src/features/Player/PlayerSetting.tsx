@@ -28,11 +28,17 @@ const PlayerSetting: React.FC = () => {
       <div className="min-w-[15%] flex flex-row justify-center">
         <Icon
           name={ModeMap[playMode]}
-          className="w-6 aspect-square mx-2 hover:cursor-pointer"
+          className="w-6 aspect-square mx-2 hover:cursor-pointer p-1 box-content rounded-md hover:bg-gray-200/70"
           onClick={changePlayMode}
         />
-        <Icon className="w-6 aspect-square mx-2 hover:cursor-pointer" name="volume" />
-        <Icon name="fold" />
+        <Icon
+          name="volume"
+          className="w-6 aspect-square mx-2 hover:cursor-pointer p-1 box-content rounded-md hover:bg-gray-200/70"
+        />
+        <Icon
+          name="fold"
+          className="w-6 aspect-square mx-2 cursor-pointer p-1 box-content  rounded-md hover:bg-gray-200/70"
+        />
       </div>
     </>
   )

@@ -23,10 +23,8 @@ const Img: React.FC<ImagePropsType> = (props) => {
   }, [])
 
   // 真实图片加载完成，显示真实图片
-  let isInit = true
   useEffect(() => {
-    if (isInit) loadImg(src)
-    isInit = false
+    loadImg(src)
   }, [src])
 
   // 真实图片未加载完成，先显示占位图

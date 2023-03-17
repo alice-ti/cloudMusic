@@ -73,6 +73,8 @@ export interface PlaylistType {
   trackCount: number
   coverImgUrl: string
   description: string
+  tag: string
+  tags: string[]
   [name: string]: unknown
 }
 
@@ -262,4 +264,25 @@ export interface AccountProfile {
   gender: number // 性别
   lastLoginIP: string
   lastLoginTime: number
+}
+
+/**
+ * api user/playlist
+ */
+export interface UserPlaylistType {
+  code: number
+  more: boolean
+  version: string
+  playlist: PlaylistType[]
+}
+
+/**
+ * api /top/playlist/highquality
+ */
+export interface SonglistFineApiType {
+  playlists: PlaylistType[]
+  total: number
+  more: boolean
+  code: number
+  lasttime: number
 }

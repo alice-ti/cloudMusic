@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from 'react'
+import { FC, HTMLAttributes, memo } from 'react'
 
 import Album from '@/components/Album'
 import Icon from '@/components/SvgIcon'
@@ -32,4 +32,4 @@ const PlayList: FC<PlayListPropsType> = ({ list, playDetail }) => {
   )
 }
 
-export default PlayList
+export default memo(PlayList)

@@ -9,8 +9,8 @@ const CateBtn: React.FC<CateBtnType> = (props: CateBtnType) => {
   return (
     <button
       className={
-        'mr-3 px-3.5 py-1 rounded-md bg-[#f5f5f5] text-[#7a7a7b] font-bold text-xl hover:bg-fuchsia-100 hover:text-fuchsia-900' +
-        (active ? ' bg-fuchsia-100 text-fuchsia-900' : '')
+        'mr-3 px-3.5 py-1 rounded-md bg-[#f5f5f5] text-[#7a7a7b] font-bold text-xl hover:bg-fuchsia-200 hover:text-fuchsia-900' +
+        (active ? ' bg-fuchsia-200/60 text-fuchsia-900' : '')
       }
       onClick={subToggle}
     >

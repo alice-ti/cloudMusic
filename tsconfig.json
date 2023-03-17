@@ -22,6 +22,7 @@
       "@api/*": ["src/service/*"],
       "@utils/*": ["src/utils/*"],
       "@assets/*": ["src/assets/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@type/*": ["src/type/*"],
       "@pages/*": ["src/pages/*"],
       "@store/*": ["src/store/*"],

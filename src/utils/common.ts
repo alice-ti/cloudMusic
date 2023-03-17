@@ -24,7 +24,7 @@ export const formatSingerName = (arr: SingerType[]): string => {
 export const getColor = async (
   imgUrl: string,
   paletteCount = 5
-): Promise<[[number, number, number], Array<[number, number, number]>]> => {
+): Promise<[number[], number[][]]> => {
   const img = new Image()
   img.src = imgUrl
   img.crossOrigin = 'Anonymous' // 允许跨域

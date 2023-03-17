@@ -1,6 +1,6 @@
 import Button from '@components/Button'
-import useLoading from '@components/Loading/useLoading'
 import TrackItem from '@components/TrackItem'
+import useLoading from '@hooks/useLoading'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 

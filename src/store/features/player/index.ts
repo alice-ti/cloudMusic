@@ -25,7 +25,7 @@ export const switchSongsAsync = createAsyncThunk(
   async (params: SwitchSongsAsyncParamsType, { dispatch }) => {
     const { SongId, listId, type } = params
     await player.replacePlaylist(type, listId)
-    await player._replaceCurrentTrack(SongId)
+    await player.replaceCurrentTrack(SongId)
     dispatch(switchSongs())
   }
 )

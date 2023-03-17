@@ -22,13 +22,13 @@ class Player {
   /** 是否正在播放中 */
   _playing: boolean
   /** 当前播放歌曲的进度 */
-  _progress: number
+  private _progress: number
   _enabled: boolean
   /** 播放模式
    * - 0-列表播放 1-列表循环 2-随机播放 3-单曲循环 4-心动模式 */
-  _playMode: number
+  private _playMode: number
   /** 音量 0 to 1 */
-  _volume: number
+  private _volume: number
   /** 用于保存静音前的音量 */
   _volumeBeforeMuted: number
   _personalFMLoading: boolean // 是否正在私人FM中加载新的track
@@ -36,17 +36,13 @@ class Player {
 
   // 播放信息
   /** 播放列表 */
-  _list: SongType[]
-  /** 当前播放歌曲在播放列表里的index */
-  _current: number
-  /** 被随机打乱的播放列表，随机播放模式下会使用此播放列表 */
-  _shuffledList: SongType[]
+  private _list: SongType[]
   /** 当前播放列表的信息 */
-  _playlistSource: { type: string; id: number }
+  private _playlistSource: { type: string; id: number }
   /** 当前播放歌曲的详细信息 */
-  _currentTrack: SongType
+  private _currentTrack: SongType
   /** 当这个list不为空时，会优先播放这个list的歌 */
-  _playNextList: SongType[]
+  private _playNextList: SongType[]
   _isPersonalFM: boolean // 是否是私人FM模式
   _personalFMTrack: { id: number } // 私人FM当前歌曲
   _personalFMNextTrack: { id: number } // 私人FM下一首歌曲信息（为了快速加载下一首）
@@ -63,21 +59,9 @@ class Player {
     this._personalFMNextLoading = false // 是否正在缓存私人FM的下一首歌曲
 
     // 播放信息
-    this._currentTrack = {
-      id: 33894312,
-      name: '测试',
-      alia: [],
-      dt: 0,
-      ar: [{ id: -1, name: '' }],
-      al: {
-        picUrl: '',
-        name: '',
-        id: -1,
-      },
-    } // 当前播放歌曲的详细信息
+    this._currentTrack = { id: 412902095 } // 当前播放歌曲的详细信息
+
     this._list = [] // 当前播放列表
-    this._current = 0 // 当前播放歌曲在播放列表里的index
-    this._shuffledList = [] // 被随机打乱的播放列表，随机播放模式下会使用此播放列表
     this._playlistSource = { type: 'playlist', id: 123 } // 当前播放列表的信息
     this._playNextList = [] // 当这个list不为空时，会优先播放这个list的歌
     this._isPersonalFM = false // 是否是私人FM模式
@@ -88,6 +72,10 @@ class Player {
     this._init()
   }
 
+  /**
+   * @description 播放模式
+   * - 0-列表播放 1-列表循环 2-随机播放 3-单曲循环 4-心动模式
+   */
   get playMode(): number {
     return this._playMode
   }
@@ -101,19 +89,29 @@ class Player {
     this._playMode = mode
   }
 
+  /**
+   * @description 音量
+   * - 范围区间 [0, 1]
+   */
   get volume(): number {
     return this._volume
   }
 
-  set volume(volume) {
+  set volume(volume: number) {
     this._volume = volume
     Howler.volume(volume)
   }
 
+  /**
+   * @description 播放状态
+   */
   get playing(): boolean {
     return this._playing
   }
 
+  /**
+   * @description 播放进度
+   */
   get progress(): number {
     // return this._progress
     return this._howler?.seek() ?? 0
@@ -140,6 +138,9 @@ class Player {
   //   return this._howler === null ? 0 : this._howler.seek()
   // }
 
+  /**
+   * @description 播放列表
+   */
   get playNextList(): SongType[] {
     switch (this._playMode) {
       case 0:
@@ -153,6 +154,7 @@ class Player {
 
   /**
    * @description 随机播放歌曲列表
+   * - 被随机打乱的播放列表，随机播放模式下会使用此播放列表
    */
   get shuffledList(): SongType[] {
     return _.shuffle(this._list)
@@ -186,12 +188,12 @@ class Player {
   /**
    * @description init
    */
-  _init(): void {
+  private _init(): void {
     Howler.volume(this.volume)
 
     this._loadSelfFromLocalStorage()
 
-    void this._replaceCurrentTrack(33894312)
+    void this._replaceCurrentTrack(this._currentTrack.id)
 
     // this._setIntervals()
   }
@@ -239,7 +241,11 @@ class Player {
     else this.play()
   }
 
-  _loadSelfFromLocalStorage(): void {
+  /**
+   * @description 加载缓存
+   * @returns
+   */
+  private _loadSelfFromLocalStorage(): void {
     const player = JSON.parse(localStorage.getItem('player') as string)
     if (player === undefined) return
     console.log('_loadSelfFromLocalStorage')
@@ -248,6 +254,9 @@ class Player {
     // }
   }
 
+  /**
+   * @description 清除播放列表
+   */
   clearPlayNextList(): void {
     this._playNextList = []
   }
@@ -255,39 +264,43 @@ class Player {
   /**
    * @description 缓存下一首歌
    */
-  _cacheNextTrack(): void {}
+  private _cacheNextTrack(): void {}
 
   /**
    * @description 下一首歌曲回调
    */
-  _nextTrackCallback(): void {
+  private _nextTrackCallback(): void {
     console.log('next callback')
-    this._playNextTrack()
+    // 单曲循环
+    if (this.playMode === 3) {
+      void this._replaceCurrentTrack(this.currentTrack.id)
+    } else this._playNextTrack()
   }
 
   /**
    * @description 播放下一首歌曲
    */
-  _playNextTrack(): void {
+  private _playNextTrack(): void {
     const [TrackId] = this._getNextTrack()
 
     if (TrackId !== -1) void this._replaceCurrentTrack(TrackId)
   }
 
   /**
-   * @description 播放上一首歌曲
+   * @description 播放下一首
    */
-  _playPrevTrack(): void {}
+  playNextTrack(): void {
+    this._playNextTrack()
+  }
 
   /**
    * @description 获取下一首歌曲的信息
-   * @returns
+   * @returns [下一首歌曲id]
    */
-  _getNextTrack(): [number] {
+  private _getNextTrack(): [number] {
     let TrackId = -1
 
-    // 单曲循环
-    if (this.playMode === 3) return [this._currentTrack.id]
+    if (this.current === -1) return [TrackId]
 
     // 正常下一首歌曲
     if (this.playNextList.length > this.current) {
@@ -295,6 +308,38 @@ class Player {
     }
 
     return [TrackId]
+  }
+
+  /**
+   * @description 播放上一首歌曲
+   * @inner
+   */
+  private _playPrevTrack(): void {
+    // 单曲循环
+    if (this.playMode === 3) {
+      void this._replaceCurrentTrack(this.currentTrack.id)
+    } else {
+      const [TrackId] = this._getPrevTrack()
+      if (TrackId !== null) void this._replaceCurrentTrack(TrackId)
+    }
+  }
+
+  /**
+   * @description 播放上一首歌曲
+   */
+  playPrevTrack(): void {
+    this._playPrevTrack()
+  }
+
+  /**
+   * @description 获取上一首歌曲
+   * @inner
+   * @returns {[number,number]} [歌曲id, 上一首歌曲位置]
+   */
+  private _getPrevTrack(): [number, number] {
+    const next = this.current - 1
+
+    return [this.playNextList[next].id, next]
   }
 
   /**
@@ -343,7 +388,7 @@ class Player {
    * @param source 歌曲源
    * @param autoplay 自动播放
    */
-  _playAudioSource(source: string, autoplay = true): void {
+  private _playAudioSource(source: string, autoplay = true): void {
     Howler.unload()
     this._howler = new Howl({
       src: [source],
@@ -380,11 +425,12 @@ class Player {
 
   /**
    * @description 替换当前歌曲
+   * @inner
    * @param id
    * @param autoplay
    * @param ifUnplayableThen
    */
-  async _replaceCurrentTrack(
+  private async _replaceCurrentTrack(
     id: number,
     autoplay = true,
     ifUnplayableThen = UNPLAYABLE_CONDITION.PLAY_NEXT_TRACK
@@ -399,6 +445,20 @@ class Player {
   }
 
   /**
+   * @description 替换当前歌曲
+   * @param id
+   * @param autoplay
+   * @param ifUnplayableThen
+   */
+  public async replaceCurrentTrack(
+    id: number,
+    autoplay = true,
+    ifUnplayableThen = UNPLAYABLE_CONDITION.PLAY_NEXT_TRACK
+  ): Promise<void> {
+    await this._replaceCurrentTrack(id, autoplay, ifUnplayableThen)
+  }
+
+  /**
    * @description 是否成功加载音频，并使用加载完成的音频替换了howler实例
    * @param track 歌曲详细信息
    * @param autoplay 自动播放
@@ -406,7 +466,7 @@ class Player {
    * @param ifUnplayableThen  Partial 当前歌曲不可播放时，后续操作
    * @returns replaced 是否已经替换
    */
-  async _replaceCurrentTrackAudio(
+  private async _replaceCurrentTrackAudio(
     track: SongType,
     autoplay: boolean,
     isCacheNextTrack: boolean,
@@ -442,7 +502,7 @@ class Player {
   /**
    * @description 获取audio播放源
    */
-  async _getAudioSource(track: SongType): Promise<string | null> {
+  private async _getAudioSource(track: SongType): Promise<string | null> {
     // neteasecloud
     const {
       data: { data },
