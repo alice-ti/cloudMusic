@@ -27,14 +27,23 @@ export const getRecSongSheet = async (
 
 /**
  * @description 歌单 ( 网友精选碟 )
- * @ 说明 : 调用此接口 , 可获取网友精选碟歌单
+ * @explain 说明 : 调用此接口 , 可获取网友精选碟歌单
  * - order: 可选值为 'new' 和 'hot', 分别对应最新和最热 , 默认为 'hot'
- * - cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取(/playlist/catlist)
+ * - cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取( **playlist/catlist** )
  * - limit: 取出歌单数量 , 默认为 50
  */
-export const topPlaylist = async (params = {}): Promise<AxiosResponse<ToplistApiType>> => {
+export const topPlaylist = async (params?: {
+  order?: 'hot' | 'new'
+  cat?: string
+  limit?: number
+}): Promise<AxiosResponse<ToplistApiType>> => {
+  const { order = 'hot', cat = '', limit = 50 } = params ?? {}
   return await request<ToplistApiType>('/top/playlist', 'GET', {
-    data: params,
+    data: {
+      order,
+      cat,
+      limit,
+    },
   })
 }
 

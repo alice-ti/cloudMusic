@@ -1,5 +1,5 @@
 import Img from '@components/Img'
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, HTMLAttributes, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import FormatSingerName from '@/features/FormatSingerName'
@@ -8,16 +8,17 @@ import { switchSongsAsync } from '@/store/features/player'
 import type { SongType } from '@/type/common'
 import { isCanPlayTrack } from '@/utils/common'
 import { formatTime } from '@/utils/time'
-interface TrackItemType {
+interface TrackItemType extends HTMLAttributes<HTMLElement> {
   songProps: SongType
   playlistId: number
   style?: CSSProperties
+  type?: 'playlist' | 'album' | 'search'
 }
 
 const TrackItem: React.FC<TrackItemType> = (props) => {
   const [showLike, setShowLike] = useState<boolean>(false)
   const dispatch = useDispatch<AppDispatch>()
-  const { style, playlistId, songProps } = props
+  const { style, playlistId, songProps, type = 'playlist' } = props
   const {
     name,
     dt,
@@ -31,7 +32,7 @@ const TrackItem: React.FC<TrackItemType> = (props) => {
 
   const selectSong = (): void => {
     // TODO 同一歌单内 歌曲点击处理
-    void dispatch(switchSongsAsync({ type: 'playlist', SongId, listId: playlistId }))
+    void dispatch(switchSongsAsync({ type, SongId, listId: playlistId }))
   }
 
   const result = isCanPlayTrack(songProps)

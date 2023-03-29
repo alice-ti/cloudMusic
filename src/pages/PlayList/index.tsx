@@ -54,7 +54,7 @@ const Songsheet: React.FC = () => {
 
   return (
     <>
-      <main className="flex-1 overflow-y-auto px-14 box-border">
+      <main className="lg:px-20 flex-1 overflow-y-auto px-14 box-border">
         {listDetail != null && <Introduce playDetails={listDetail} />}
         {/* todo 使用虚拟列表替换 */}
         <div>

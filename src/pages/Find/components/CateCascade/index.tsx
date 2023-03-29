@@ -10,17 +10,22 @@ interface CateCascadeType {
 }
 
 interface CurrType {
-  cate: string
+  cate: string | string[]
   sub: string
 }
 
 // 格式化二级分类
-const formatSublist = (list: CateType[], curr: CurrType, cate: ClassifyType): any => {
+const formatSublist = (curr: CurrType, cate: ClassifyType): any => {
+  const list = cate?.sub ?? []
   const obj: {
     [name: string]: CateType[]
   } = {}
   list
-    .filter((ele) => curr.cate === cate.cate[ele.category])
+    .filter((ele) => {
+      if (curr.cate === '') return ele
+      if (curr.cate === cate.cate[ele.category]) return ele
+      else return false
+    })
     .forEach((ele) => {
       const key = ele.category.toString()
       if (typeof obj[key] === 'undefined') {
@@ -32,7 +37,7 @@ const formatSublist = (list: CateType[], curr: CurrType, cate: ClassifyType): an
   return obj
 }
 
-const currReducer: Reducer<CurrType, { type: 'cate' | 'sub'; val: number | string }> = (
+const currReducer: Reducer<CurrType, { type: 'cate' | 'sub'; val: number | string | string[] }> = (
   state,
   action
 ) => {
@@ -55,7 +60,9 @@ const CateCascade: React.FC<CateCascadeType> = (props) => {
   const handleSubToggle = (txt: string): void => {
     if (txt === curr.cate || !isShowSub) setIsShowSub(!isShowSub)
     const index = Object.keys(cate?.cate).findIndex((ele) => cate.cate[ele] === txt)
-    setCurr({ type: 'cate', val: cate.cate[index] })
+
+    if (index !== -1) setCurr({ type: 'cate', val: cate.cate[index] })
+    else setCurr({ type: 'cate', val: '' })
   }
 
   // 点击事件
@@ -74,6 +81,7 @@ const CateCascade: React.FC<CateCascadeType> = (props) => {
             key={idx}
           />
         ))}
+        <CateButton text="..." active={curr.cate === ''} subToggle={(e) => handleSubToggle('')} />
       </header>
       <main
         className={
@@ -81,31 +89,29 @@ const CateCascade: React.FC<CateCascadeType> = (props) => {
           (isShowSub ? '' : 'hidden')
         }
       >
-        {Object.values<CateType[]>(formatSublist(cate?.sub, curr, cate))?.map(
-          (ele: CateType[], idx) => (
-            <ul className="mt-4" key={idx}>
-              <li className="flex">
-                <span className="text-2xl w-24 px-3.5 py-1 font-bold rounded-md text-[#4e4e4f]">
-                  {curr.cate}
-                </span>
-                <ul className="flex-1 flex flex-wrap">
-                  {ele.map((item: CateType, index: number) => (
-                    <li
-                      className={
-                        'my-1 mr-3 px-3.5 py-1 font-bold text-xl rounded-md cursor-pointer text-[#7a7a7b] hover:bg-fuchsia-100 hover:text-fuchsia-900 ' +
-                        (tag === item.name ? 'bg-fuchsia-100 text-fuchsia-900' : '')
-                      }
-                      onClick={() => handleClick(item)}
-                      key={index}
-                    >
-                      {item?.name}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-          )
-        )}
+        {Object.values<CateType[]>(formatSublist(curr, cate))?.map((ele: CateType[], idx) => (
+          <ul className="mt-2" key={idx}>
+            <li className="flex">
+              <span className="text-2xl w-24 px-3.5 py-1 font-bold rounded-md text-[#4e4e4f]">
+                {cate.cate[ele[0]?.category]}
+              </span>
+              <ul className="flex-1 flex flex-wrap">
+                {ele.map((item: CateType, index: number) => (
+                  <li
+                    className={
+                      'my-1 mr-3 px-3.5 py-1 font-bold text-xl rounded-md cursor-pointer text-[#7a7a7b] hover:bg-fuchsia-100 hover:text-fuchsia-900 ' +
+                      (tag === item.name ? 'bg-fuchsia-100 text-fuchsia-900' : '')
+                    }
+                    onClick={() => handleClick(item)}
+                    key={index}
+                  >
+                    {item?.name}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        ))}
       </main>
     </>
   )

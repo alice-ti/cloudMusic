@@ -11,7 +11,7 @@ interface PlayerStateType {
 interface SwitchSongsAsyncParamsType {
   SongId: number
   listId: number
-  type: 'playlist' | 'album'
+  type: 'playlist' | 'album' | 'search'
   [name: string]: unknown
 }
 

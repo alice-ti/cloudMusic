@@ -19,7 +19,7 @@ const User: React.FC = () => {
   return (
     <>
       <Img
-        className="mr-20 mt-3 float-right clear-both h-10 aspect-square rounded-md cursor-pointer"
+        className="ml-10 mt-3 float-right clear-both h-10 aspect-square rounded-md cursor-pointer"
         src={info?.avatarUrl ?? ''}
       />
     </>

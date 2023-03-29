@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC, HTMLAttributes } from 'react'
 
 import { SingerType } from '@/type/common'
 
-interface FormatSingerPropsType {
+interface FormatSingerPropsType extends HTMLAttributes<HTMLElement> {
   ar?: SingerType[]
 }
 

@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { HTMLAttributes, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import ButtonPlay from '@/components/ButtonPlay'
 import Img from '@/components/Img'
 import type { ArtistType } from '@/type/common'
 
-interface ArtistPropType {
+interface ArtistPropType extends HTMLAttributes<HTMLElement> {
   info: ArtistType
 }
 const Artist: React.FC<ArtistPropType> = (props: ArtistPropType) => {
-  const { info } = props
+  const { info, className = '' } = props
   const [showBtn, setShowBtn] = useState<boolean>(false)
   const navigate = useNavigate()
   const goArtist = (id: number): void => {
@@ -21,7 +21,7 @@ const Artist: React.FC<ArtistPropType> = (props: ArtistPropType) => {
 
   return (
     <>
-      <div className="text-center">
+      <div className={`text-center ` + className}>
         <div
           className="w-40 aspect-square relative text-stone-200"
           onMouseEnter={handleEnter}

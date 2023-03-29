@@ -8,7 +8,7 @@ interface CoverType extends HTMLAttributes<HTMLImageElement> {
 
 const Cover: React.FC<CoverType> = (props) => {
   const { className = '', src = '' } = props
-  const [pattle, setPattle] = useState<Array<[number, number, number]>>()
+  const [pattle, setPattle] = useState<number[][]>()
 
   useEffect(() => {
     const init = async (): Promise<void> => {

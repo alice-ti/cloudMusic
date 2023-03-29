@@ -286,3 +286,42 @@ export interface SonglistFineApiType {
   code: number
   lasttime: number
 }
+
+/**
+ * api /search
+ */
+export interface SearchType {
+  1: {
+    code: number
+    result: {
+      songCount: number
+      songs: SongType[]
+      [name: string]: unknown
+    }
+  }
+  10: {
+    code: number
+    result: {
+      albumCount: number
+      songs: AlbumType[]
+      [name: string]: unknown
+    }
+  }
+  100: {
+    code: number
+    result: {
+      artistCount: number
+      artists: AlbumType[]
+      [name: string]: unknown
+    }
+  }
+  1000: {
+    code: number
+    result: {
+      playlistCount: number
+      playlists: AlbumType[]
+      [name: string]: unknown
+    }
+  }
+  [name: number]: unknown
+}

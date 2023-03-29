@@ -6,7 +6,7 @@ type AlbumClickType = () => void
 
 interface AlbumPropsType extends HTMLAttributes<HTMLElement> {
   src: string
-  albumClick: AlbumClickType
+  albumClick?: AlbumClickType
 }
 
 const Album: React.FC<AlbumPropsType> = (props) => {
@@ -25,7 +25,7 @@ const Album: React.FC<AlbumPropsType> = (props) => {
       style={{ backgroundImage: `url(${src})`, backgroundSize: '100%' }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
-      onClick={() => albumClick()}
+      onClick={() => (albumClick != null ? albumClick() : '')}
     >
       {showBtn && <ButtonPlay />}
     </div>

@@ -36,10 +36,22 @@ export interface SongType {
   [name: string]: unknown
 }
 
+interface AlbumArtistType {
+  id: number
+  name: string
+  picUrl: string
+  albumSize: number
+  [name: string]: unknown
+}
+
 /**
  * base 专辑类型
  */
 export interface AlbumType {
+  artist: {
+    [name: string]: unknown
+  }
+  artists: AlbumArtistType[]
   picUrl: string
   name: string
   type: string
