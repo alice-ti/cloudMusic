@@ -3,7 +3,13 @@ import { AxiosResponse } from 'axios'
 import type { SearchType } from '@/type/api.d'
 import request from '@/utils/request'
 
-export type TypeOfSearch = 1 | 10 | 100 | 1000 | 1002 | 1004 | 1006 | 1009 | 1014 | 1018 | 2000
+// export type TypeOfSearch = 1 | 10 | 100 | 1000 | 1002 | 1004 | 1006 | 1009 | 1014 | 1018 | 2000
+export enum TypeOfSearch {
+  Song = 1,
+  Album = 10,
+  Artist = 100,
+  Playlist = 1000,
+}
 
 interface PagingType {
   limit?: number

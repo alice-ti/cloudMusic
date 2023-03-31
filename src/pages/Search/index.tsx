@@ -1,7 +1,7 @@
 import { FC, Reducer, useEffect, useReducer } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { type TypeOfSearch, cloudsearch } from '@/service/search'
+import { cloudsearch, TypeOfSearch } from '@/service/search'
 import type { ToplistType } from '@/type/api'
 import type { AlbumType, ArtistType, SongType } from '@/type/common'
 
@@ -29,15 +29,27 @@ const SearchTypeList: Array<{ name: string; id: TypeOfSearch }> = [
   },
 ]
 
-type TypeMap = SongType[] | AlbumType[]
+// type TypeMap = SongType[] | AlbumType[] | ArtistType[] | ToplistType[]
 
-const ResultMap: { [name in TypeOfSearch]: (list: TypeMap) => JSX.Element } = {
-  1: (list: SongType[]) => <SearchTrack list={list} />,
-  10: (list: AlbumType[]) => <SearchAlbum list={list} />,
-  100: (list: ArtistType[]) => <SearchSinger list={list} />,
-  1000: (list: ToplistType[]) => <SearchPlaylist list={list} />,
+// const ResultMap: { [name in TypeOfSearch]: (list: TypeMap) => JSX.Element } = {
+// 1: (list: SongType[]) => <SearchTrack list={list} />,
+// 10: (list: AlbumType[]) => <SearchAlbum list={list} />,
+// 100: (list: ArtistType[]) => <SearchSinger list={list} />,
+// 1000: (list: ToplistType[]) => <SearchPlaylist list={list} />,
+// }
+
+const renderSearchResults = <T extends any>(list: T[], type: TypeOfSearch): JSX.Element => {
+  switch (type) {
+    case TypeOfSearch.Song:
+      return <SearchTrack list={list as SongType[]} />
+    case TypeOfSearch.Album:
+      return <SearchAlbum list={list as AlbumType[]} />
+    case TypeOfSearch.Artist:
+      return <SearchSinger list={list as ArtistType[]} />
+    case TypeOfSearch.Playlist:
+      return <SearchPlaylist list={list as ToplistType[]} />
+  }
 }
-
 interface SearchResult {
   type: TypeOfSearch
   val: any[]
@@ -94,7 +106,8 @@ const Search: FC = () => {
         </aside>
         <hr />
         <section className="lg:px-20 box-border flex flex-1 h-full flex-col overflow-y-auto">
-          {ResultMap[result.type](result.val)}
+          {/* {ResultMap[result.type](result.val)} */}
+          {renderSearchResults(result.val, result.type)}
         </section>
       </main>
     </>

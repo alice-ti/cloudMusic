@@ -26,6 +26,8 @@ const reducerAction: Reducer<ClassifyType, ClassifyType> = (state, action) => {
   return action
 }
 
+console.log(import.meta.env.VITE_SOME_KEY)
+
 // 发现-歌单
 const Find: React.FC = () => {
   const navigate = useNavigate()
