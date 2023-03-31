@@ -3,7 +3,8 @@ import axios from 'axios'
 
 // import { getCookies } from '@/utils/auth'
 
-const BASE_URL = '/api'
+console.log('URL', import.meta.env.VITE_BASE_URL)
+const BASE_URL = import.meta.env.VITE_BASE_URL ?? '/api'
 
 interface OptionType {
   data?: unknown
