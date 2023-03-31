@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 import lrc from '@/application/Lyric'
 import player from '@/application/player'
+import type { SongType } from '@/type/common'
 
 const Lyric: React.FC = () => {
   // const [progress, setProgress] = useState(0)
@@ -17,17 +18,17 @@ const Lyric: React.FC = () => {
 
   useEffect(() => {
     const init = async (): Promise<void> => {
-      await lrc.getLrc(Song.id)
+      await lrc.getLrc((Song as SongType).id)
       timeList = Object.keys(lrc?.timeTags)
       const lrcList = Object.values(lrc?.timeTags)
       setLyricList(lrcList)
 
       update()
     }
-    if (Song.id !== -1) void init()
+    if (Song != null && Song.id !== -1) void init()
 
     return () => clearInterval(lyricInterval.current)
-  }, [Song.id])
+  }, [Song !== null ? Song.id : ''])
 
   useEffect(() => {}, [])
 

@@ -1,5 +1,5 @@
 import Img from '@components/Img'
-import type { AlbumType } from '@type/api'
+import type { AlbumType } from '@type/common'
 import { formatDate } from '@utils/time'
 
 const Album: React.FC<AlbumType> = (props: AlbumType) => {

@@ -1,5 +1,5 @@
 import Img from '@components/Img'
-import { MvType } from '@type/api'
+import { MvType } from '@type/common'
 import { formatDate } from '@utils/time'
 
 const Mv: React.FC<MvType> = (props: MvType) => {

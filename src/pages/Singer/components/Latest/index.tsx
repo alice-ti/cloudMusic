@@ -1,4 +1,4 @@
-import type { AlbumType, MvType } from '@type/api'
+import type { AlbumType, MvType } from '@type/common'
 
 import Album from './Album'
 import Mv from './Mv'

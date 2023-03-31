@@ -59,6 +59,7 @@ class Player {
     this._personalFMNextLoading = false // 是否正在缓存私人FM的下一首歌曲
 
     // 播放信息
+    // @ts-expect-error
     this._currentTrack = { id: 412902095 } // 当前播放歌曲的详细信息
 
     this._list = [] // 当前播放列表
